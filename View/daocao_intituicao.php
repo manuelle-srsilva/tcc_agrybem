@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesta Rural - Agrybem</title>
+    <link rel="stylesheet" href="../templates/assets/css/doacao_instituicao.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
+            </div>
+            <nav class="nav">
+                <a href="../View/instituicao_pag_principal.php" class="nav-button">Voltar</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- HEADER SECTION WITH LOGO AND TITLE -->
+        <section class="header-section">
+            <div class="container">
+                <div class="header-top">
+                    <div class="logo-institution">
+                        <img src="../templates/assets/img/instituição 1.png" alt="Logo da Empresa" class="logo-img">
+                    </div>
+
+                    <div class="header-info">
+                        <h1 class="institution-title">Mesa Solidária</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DESCRIPTION CARD -->
+        <section class="card-section">
+            <div class="container">
+                <div class="card" data-card="description">
+                
+                    <!-- REMOVIDO: style="display: none;" -->
+                    <div class="card-actions">
+                        <button class="card-save-button" title="Salvar">✓</button>
+                        <button class="card-cancel-button" title="Cancelar">✕</button>
+                    </div>
+                    <div class="form-field">
+                        <textarea id="company-description" disabled>Acreditamos que ninguém deve passar fome. Levamos refeições, esperança e carinho para famílias em situação de vulnerabilidade.</textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSTITUTION INFO CARD -->
+        <section class="card-section">
+            <div class="container">
+                <div class="card" data-card="institution">
+                    <div class="card-header">
+                        <h2 class="card-title">Informações da Instituição</h2>
+                     
+                    </div>
+                    <!-- REMOVIDO: style="display: none;" -->
+                    <div class="card-actions">
+                        <button class="card-save-button" title="Salvar">✓</button>
+                        <button class="card-cancel-button" title="Cancelar">✕</button>
+                    </div>
+                    <form class="institution-form" id="institutionForm">
+                        
+
+                        <div class="form-field">
+                            <label for="company-name">Nome da Instituição</label>
+                            <input type="text" id="company-name" value="Mesa Rural" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="email">Email Institucional</label>
+                            <input type="email" id="email" value="mesarural@gmail.com" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="cpf">CNPJ</label>
+                            <input type="text" id="cpf" value="04.196.008/0001-26" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="phone">Telefone</label>
+                            <input type="tel" id="phone" value="(71)9 9999-9999" disabled>
+                        </div>
+                        
+                        <div class="form-field">
+                            <label for="whatsapp">Link para WhatsApp</label>
+                            <input type="text" id="whatsapp" value="" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="hours">Horário de Funcionamento</label>
+                            <input type="text" id="hours" value="Seg - Sex: 07:00 - 17:00 • Sáb: 07:00 - 12:00 • Dom: Fechado" disabled>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADDRESS CARD -->
+        <section class="card-section">
+            <div class="container">
+                <div class="card" data-card="address">
+                    <div class="card-header">
+                        <h2 class="card-title">Endereço</h2>
+
+                    </div>
+                    <!-- REMOVIDO: style="display: none;" -->
+                    <div class="card-actions">
+                        <button class="card-save-button" title="Salvar">✓</button>
+                        <button class="card-cancel-button" title="Cancelar">✕</button>
+                    </div>
+                    <form class="address-form" id="addressForm">
+                        <div class="form-field">
+                            <label for="cep">CEP</label>
+                            <input type="text" id="cep" value="42835-000" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="street">Rua</label>
+                            <input type="text" id="street" value="R. Elvo Urbano Central" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="number">Número</label>
+                            <input type="text" id="number" value="789" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="neighborhood">Bairro</label>
+                            <input type="text" id="neighborhood" value="Centro" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="city">Cidade</label>
+                            <input type="text" id="city" value="Camaçari" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="state">Estado</label>
+                            <input type="text" id="state" value="BA" disabled>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="reference">Ponto de Referência</label>
+                            <input type="text" id="reference" value="Praça Abrantes" disabled>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+      <!-- MAP SECTION -->
+        <section class="map-section">
+            <div class="container">
+                <div class="map-placeholder">
+                    <iframe
+                        id="google-map-iframe"
+                        width="600"
+                        height="450"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC0tzkSQhRrMOcoMZ1XU0Ty4RwCER5gxLo
+                            &q=R.+Costa+Pinto,30-Centro,Camaçari-BA,42800-040">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+  
+    
+    <script src="js/empresa_perfil.js"></script>
+</body>
+</html>

@@ -49,7 +49,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../templates/assets/css/style/doacao_pag_principal.css">
+    <link rel="stylesheet" href="../templates/assets/css/doacao_pag_principal.css">
 </head>
 <body>
    <!-- Header -->
@@ -65,21 +65,21 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
                 <?php endif; ?>
                 <div class="menu-container">
                     <button class="menu-toggle" id="menuToggle">
-                        <img alt="Menu" class="menu-icon-img" style="width:32px;height:32px;border-radius:50%;object-fit:cover;" src="<?php echo isset($data) ? 'data:'.htmlspecialchars($mime, ENT_QUOTES, 'UTF-8').';base64,'.base64_encode($data) : 'img/menu.png'; ?>">
+                        <img src="../templates/assets/img/menu.png" alt="Menu" class="menu-icon-img">
                     </button>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <a href="instituicao_perfil.php" class="menu-item">
-                            <img src="img/perfil.png" alt="Perfil" class="menu-item-icon">
+                        <a href="../View/instituicao_perfil.php" class="menu-item">
+                            <img src="../templates/assets/img/perfil.png" alt="Perfil" class="menu-item-icon">
                             <span>Perfil</span>
                         </a>
-                         <a href="daocao_intituicao.html" class="menu-item">
-                            <img src="img/loja empresa.png" alt="Sair" class="menu-item-icon">
+                         <a href="../View/daocao_intituicao.php" class="menu-item">
+                            <img src="../templates/assets/img/loja empresa.png" alt="Sair" class="menu-item-icon">
                             <span>instituição</span>
                         </a>
     
         
-                        <a href="doacao_login.html" class="menu-item">
-                            <img src="img/sair.png" alt="Sair" class="menu-item-icon">
+                        <a href="../View/instituicao_login.php" class="menu-item">
+                            <img src="../templates/assets/img/sair.png" alt="Sair" class="menu-item-icon">
                             <span>Sair</span>
                         </a>
                     </div>
@@ -90,7 +90,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
 
     <!-- Hero Section -->
     <section class="hero">
-        <img src="/img/principal.doação.png" alt="Imagem de fundo da seção hero" class="hero-img">
+        <img src="../templates/assets/img/principal.doação.png" alt="Imagem de fundo da seção hero" class="hero-img">
         <div class="hero-image-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Conectando quem ajuda a quem precisa
@@ -107,7 +107,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
                 <!-- Card de Produto 1 -->
                 <div class="product-card">
                     <div class="product-image-placeholder">
-                     <img src="img/dd.png" alt="">
+                     <img src="../templates/assets/img/dd.png" alt="">
                     </div>
                     <div class="product-info-overlay">
         
@@ -122,7 +122,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
                 <!-- Card de Produto 3 -->
                 <div class="product-card">
                     <div class="product-image-placeholder">
-                         <img src="img/doacao (1).png" alt="">
+                         <img src="../templates/assets/img/doacao (1).png" alt="">
                     </div>
                     <div class="product-info-overlay">
                         
@@ -135,7 +135,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
                    <!-- Card de Produto 3 -->
                 <div class="product-card">
                     <div class="product-image-placeholder">
-                         <img src="img/doacao (2).png" alt="">
+                         <img src="../templates/assets/img/doacao (2).png" alt="">
                     </div>
                     <div class="product-info-overlay">
                         <h3 class="product-name">Catálogo Solidário</h3>
@@ -147,7 +147,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
                    <!-- Card de Produto 3 -->
                 <div class="product-card">
                     <div class="product-image-placeholder">
-                         <img src="img/doacao (3).png" alt="">
+                         <img src="../templates/assets/img/doacao (3).png" alt="">
                     </div>
                     <div class="product-info-overlay">
                        
@@ -171,7 +171,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
                 <div class="search-input-wrapper">
                     <input type="text" class="search-input" placeholder="Pesquisar...">
                     <button class="search-btn-icon" id="searchIcon">
-                        <img src="img/lupa de pesquisa.png" alt="Pesquisar" class="search-icon-img">
+                        <img src="../templates/assets/img/lupa de pesquisa.png" alt="Pesquisar" class="search-icon-img">
                     </button>
                 </div>
             </div>
@@ -183,7 +183,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
             <!-- Cartão 1 -->
             <div class="card">
                 <div class="card-image">
-                    <img src="img/instituição 1.png" alt="Crédito Rural">
+                    <img src="../templates/assets/img/instituição 1.png" alt="Crédito Rural">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">Ação Cidadã Brasil</h3>
@@ -194,7 +194,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
             <!-- Cartão 2 -->
             <div class="card">
                 <div class="card-image">
-                    <img src="img/instituição 2.png" alt="Sementes">
+                    <img src="../templates/assets/img/instituição 2.png" alt="Sementes">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">Comunidade fé e verdade</h3>
@@ -205,7 +205,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
             <!-- Cartão 3 -->
             <div class="card">
                 <div class="card-image">
-                    <img src="img/instituição 3.png" alt="Maquinário">
+                    <img src="../templates/assets/img/instituição 3.png" alt="Maquinário">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">Maquinário Agrícola</h3>
@@ -216,7 +216,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
             <!-- Cartão 4 -->
             <div class="card">
                 <div class="card-image">
-                    <img src="img/instituição 4.png" alt="Fertilizantes">
+                    <img src="../templates/assets/img/instituição 4.png" alt="Fertilizantes">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">Fertilizantes Orgânicos</h3>
@@ -314,49 +314,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-container">
-            <div class="footer-logo">
-                <span class="footer-logo-text">Agry<span class="footer-logo-highlight">bem</span></span>
-            </div>
-            <div class="footer-tagline">
-                Mais que produção, uma relação com você!
-            </div>
-        </div>
-    </footer>
-
-     <!-- Seção de Copyright (Nova) -->
-    <section class="copyright-section">
-        <div class="container copyright-container">
-            <!-- Coluna 1: Copyright e Direitos -->
-            <div class="copyright-info">
-                <p class="copyright-text">
-                    &copy;  2025 - Agrybem 
-                </p>
-                <p class="copyright-text-small">
-                    Agrybem Agência de Negócios Agrícolas e Bem-Estar 
-                </p>
-            </div>
-
-
-            <!-- Coluna 2: CNPJ e Endereço (Adaptado para o contexto Agrybem) -->
-            <div class="copyright-address">
-                <p class="copyright-text-small">
-                    Camaçari/BA  | agrybem@gmail.com
-                </p>
-            </div>
-
-
-            <!-- Coluna 3: Ícones Sociais -->
-            <div class="copyright-social">
-                
-                <a href="https://www.instagram.com/agrybem?igsh=MW55dW04M3B2bXJvMA%3D%3D&utm_source=qr" target="_blank">
-                    <img src="img/instagram (1).png" alt="Instagram Agrybem" class="icon social-icon">
-                </a>
-            </div>
-        </div>
-    </section>
+   
 
  <!-- Api Vlibras -->
     <div vw class="enabled">

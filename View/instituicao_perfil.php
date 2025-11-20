@@ -107,7 +107,7 @@ $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil da Instituição - Agrybem</title>
-    <link rel="stylesheet" href="../templates/assets/css/style/doacao_perfil.css">
+    <link rel="stylesheet" href="../templates/assets/css/doacao_perfil.css">
 </head>
 <body>
     <!-- HEADER -->
@@ -117,7 +117,7 @@ $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=
                 <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
             </div>
             <nav class="nav">
-                <a href="doacao_pag_principal.html" class="nav-button">Voltar</a>
+                <a href="../View/instituicao_pag_principal.php" class="nav-button">Voltar</a>
             </nav>
         </div>
     </header>
@@ -249,17 +249,7 @@ $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=
         </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container footer-container">
-            <div class="footer-logo">
-                <span class="footer-logo-text">Agry<span class="footer-logo-highlight">bem</span></span>
-            </div>
-            <div class="footer-tagline">
-                Mais que produção, uma relação com você!
-            </div>
-        </div>
-    </footer>
+    
     
     <!-- SCRIPT DE INTERAÇÃO -->
     <script>

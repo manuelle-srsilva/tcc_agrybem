@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>empresa produto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../templates/assets/css/empresa_produto.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+  <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
+            </div>
+            <nav class="nav">
+             
+                <a href="../View/painel_profissional_empresa.php" class="nav-button">Voltar</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="../templates/assets/img/clienete pag principal.png" alt="Imagem de fundo da seção hero" class="hero-img">
+        <div class="hero-image-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Meus Produtos</h1>
+        </div>
+    </section>
+<!-- Painel Profissional -->
+    <section class="professional-panel">
+    <h2 class="panel-title">Escolha uma foto de qualidade para maior confiança</h2>
+
+    <div class="button-group">
+        <a href="empresa_cadastro_produto.html" class="btn btn-primary">Cadastrar produto</a>
+    </div>
+    
+</section>
+
+
+    <!-- Divisor -->
+     <section class="barra-diviso"> 
+<div class="divider"></div>
+
+
+     </section>
+    
+
+     <!-- Seção de Pesquisa -->
+        <section class="search-section">
+            
+            <h2 class="search-title">Seus Produtos</h2>
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <input type="text" class="search-input" placeholder="Pesquisar...">
+                    <button class="search-btn-icon" id="searchIcon">
+                        <img src="../templates/assets/img/lupa de pesquisa.png" alt="Pesquisar" class="search-icon-img">
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    <!-- Grade de Cartões -->
+    <section class="cards-section">
+        <div class="cards-grid">
+             <!-- Cartão 10 -->
+			            <div class="card" data-id="10" data-nome="Seguros Agrícolas" data-preco="R$ 80.00" data-categoria="Seguros">
+			                <div class="edit-icon" data-id="10"><i class="fas fa-pencil-alt"></i></div>
+		                <div class="card-image">
+		                    <img src="../templates/assets/img/Post instagram dia do feirante moderno verde (21) 1.png" alt="Seguros">
+		                </div>
+		                <div class="card-content">
+		                    <h3 class="card-title">Maçã</h3>	
+							<p><span>R$</span> 89,90 kg</p>
+		                    <p class="card-category">Fruta</p>
+		                </div>
+			</div>
+			             <!-- Cartão 10 -->
+			            <div class="card" data-id="10" data-nome="Seguros Agrícolas" data-preco="R$ 80.00" data-categoria="Seguros">
+			                <div class="edit-icon" data-id="10"><i class="fas fa-pencil-alt"></i></div>
+		                <div class="card-image">
+		                    <img src="../templates/assets/img/banana.png" alt="Seguros">
+		                </div>
+		                <div class="card-content">
+		                    <h3 class="card-title">Banana</h3>	
+							<p><span>R$</span> 89,90 kg</p>
+		                    <p class="card-category">Fruta</p>
+		                </div>
+		            </div>
+
+			             <!-- Cartão 10 -->
+			            <div class="card" data-id="10" data-nome="Seguros Agrícolas" data-preco="R$ 80.00" data-categoria="Seguros">
+			                <div class="edit-icon" data-id="10"><i class="fas fa-pencil-alt"></i></div>
+		                <div class="card-image">
+		                    <img src="../templates/assets/img/cafe pag inicial.png" alt="Seguros">
+		                </div>
+		                <div class="card-content">
+		                    <h3 class="card-title">Café</h3>	
+							<p><span>R$</span> 89,90 kg</p>
+		                    <p class="card-category">Grão</p>
+		                </div>
+		            </div>
+
+			              <!-- Cartão 10 -->
+			            <div class="card" data-id="10" data-nome="Seguros Agrícolas" data-preco="R$ 80.00" data-categoria="Seguros">
+			                <div class="edit-icon" data-id="10"><i class="fas fa-pencil-alt"></i></div>
+		                <div class="card-image">
+		                    <img src="../templates/assets/img/Post instagram dia do feirante moderno verde (22) 1.png" alt="Seguros">
+		                </div>
+		                <div class="card-content">
+		                    <h3 class="card-title">Laranja</h3>	
+							<p><span>R$</span> 89,90 kg</p>
+		                    <p class="card-category">Fruta</p>
+		                </div>
+		            </div>
+
+			          
+					
+
+			          
+
+			          
+		    </section>
+
+		 
+
+		    <!-- MODAL DE EDIÇÃO/EXCLUSÃO -->
+		    <div id="editModal" class="modal-overlay">
+		        <div class="modal-content">
+		            
+		            <!-- Botão Excluir (Topo) -->
+		            <button class="btn-modal btn-excluir-topo" id="btnExcluir">Excluir</button>
+		            
+		            <!-- Acordeão para Edição -->
+		            <div class="accordion-container">
+		                <div id="accordionEdit" class="accordion-header">
+		                    <span class="accordion-title">Alterar</span>
+		                    <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+		                </div>
+		                
+		                <div id="accordionContent" class="accordion-content">
+		                    <form id="editProductForm" class="modal-form">
+		                        <input type="hidden" id="modal-product-id">
+		                        
+		                        <label for="modal-nome">Nome</label>
+		                        <input type="text" id="modal-nome" name="nome" placeholder="">
+		                        
+		                        <label for="modal-preco">Preço</label>
+		                        <input type="text" id="modal-preco" name="preco" placeholder="">
+		                        
+		                        <!-- Campo Categoria oculto para compatibilidade com JS -->
+		                        <input type="hidden" id="modal-categoria">
+		                    </form>
+		                </div>
+		            </div>
+		            
+		            <!-- Botão OK (Base) -->
+		            <button class="btn-modal btn-ok-base" id="btnOK">OK</button>
+		            
+		        </div>
+		    </div>
+
+		   <script src="../templates/assets/js/empresa_modal.js"></script>
+		</body>
+		</html>

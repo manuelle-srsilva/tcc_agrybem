@@ -74,12 +74,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="form-group">  
                             <label for="senha">Digite sua Senha</label>
                             <input type="password" id="senha" name="senha" placeholder="">
+                            <div class="recuperacao-senha"><a href="../View/doacao_senha.php">Esqueceu a senha?</a></div>
                         </div>
                         
                         <button type="submit" class="btn-entrar">ENTRAR</button>
                         
                         <p class="cadastro-link">
-                            Não tem conta ainda? <a href="instituicao_cadastro.php">Cadastre-se</a>
+                            Não tem conta ainda? <a href="../View/instituicao_cadastro.php">Cadastre-se</a>
                         </p>
                     </form>
 

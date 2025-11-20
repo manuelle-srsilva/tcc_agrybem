@@ -87,11 +87,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <main class="main-content">
 
             
-
+<div class="form-container">
+                    <h1 class="form-title">Cadastre sua conta aqui!</h1>
             <!-- Formulário -->
             <form method="POST" class="form">
-                <div class="form-container">
-                    <h1 class="form-title">Cadastre sua conta aqui!</h1>
+                
                 
                     <div class="form-group">
                         <label for="nome" class="form-label">Nome do responsável</label>
@@ -118,16 +118,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="confirmacao-senha" class="form-label">Confirmação de senha</label>
                         <input type="password" id="confirmacao-senha" name="confirmacao_senha" class="form-input" placeholder="">
                     </div>
+                      <!-- BOTÃO OK -->
+                    <div class="form-group form-button-ok">
+                        <button type="submit" class="ok-button">OK</button>
+                    </div>
 
                     <p> <?php echo $registerMessage; ?> </p>
                 </div>
                 
-                <!-- Botão Próximo (Direita) -->
-                <button type="submit" class="nav-button-side nav-button-next">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </button>
+             
             </form>
         </main>
 

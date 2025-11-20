@@ -68,14 +68,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <!-- Conteúdo Principal -->
         <main class="main-content">
-            <!-- Botão Anterior (Esquerda) -->
-           <a href="endereco_empresa.php" class="form-label-descricao">
-  <button class="nav-button-side nav-button-prev">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polyline points="15 18 9 12 15 6"></polyline>
-    </svg>
-  </button>
-</a>
+           
             
 
             <!-- Formulário -->
@@ -87,29 +80,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="nome" class="form-label-descricao">(Ex: “Produtor de frutas orgânicas de Camaçari”)</label>
                       <textarea id="nome" name="descricao" class="form-input" placeholder=""></textarea>
                     </div>
+                      <!-- BOTÃO OK -->
+                    <div class="form-group form-button-ok">
+                        <button type="submit" class="ok-button">OK</button>
+                    </div>
 
-                    <!-- Botão Próximo (Direita) -->
-                    <button type="submit" class="nav-button-side nav-button-next">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
+                   
                 </form>
             </div>
 
         </main>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container footer-container">
-                <div class="footer-logo">
-                    <span class="footer-logo-text">Agry<span class="footer-logo-highlight">bem</span></span>
-                </div>
-                <div class="footer-tagline">
-                    Mais que produção, uma relação com você!
-                </div>
-            </div>
-        </footer>
     </div>
 </body>
 </html>

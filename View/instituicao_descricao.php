@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../templates/assets/css/style/empresa_descricao.css">
+    <link rel="stylesheet" href="../templates/assets/css/formulario_descricao.css">
 </head>
 <body>
     <div class="page-wrapper">
@@ -90,18 +90,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </form>       
 
         </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container footer-container">
-                <div class="footer-logo">
-                    <span class="footer-logo-text">Agry<span class="footer-logo-highlight">bem</span></span>
-                </div>
-                <div class="footer-tagline">
-                    Mais que produção, uma relação com você!
-                </div>
-            </div>
-        </footer>
+        
     </div>
 </body>
 </html>

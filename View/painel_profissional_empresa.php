@@ -49,7 +49,7 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../templates/assets/css/style/cl.css">
+    <link rel="stylesheet" href="../templates/assets/css/empresa_painel_profissional.css">
 </head>
 <body>
     <!-- Header -->
@@ -64,30 +64,31 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
                     <a href="#" class="nav-link"><?php echo htmlspecialchars($empreendimentoNome['nome'])?></a>
                 <?php endif; ?>
                 <div class="menu-container">
+                   <div class="menu-container">
                     <button class="menu-toggle" id="menuToggle">
-                        <img alt="Menu" class="menu-icon-img" style="width:32px;height:32px;border-radius:50%;object-fit:cover;" src="<?php echo isset($data) ? 'data:'.htmlspecialchars($mime, ENT_QUOTES, 'UTF-8').';base64,'.base64_encode($data) : 'img/menu.png'; ?>">
+                        <img src="../templates/assets/img/menu.png" alt="Menu" class="menu-icon-img">
                     </button>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <a href="empresa_perfil.php" class="menu-item">
-                            <img src="img/perfil.png" alt="Perfil" class="menu-item-icon">
+                        <a href="../View/empresa_perfil.php" class="menu-item">
+                            <img src="../templates/assets/img/perfil.png" alt="Perfil" class="menu-item-icon">
                             <span>Perfil</span>
                         </a>
-                        <a href="empresa_produto.html" class="menu-item">
-                            <img src="img/sacolas-de-compras.png" alt="Meus produtos" class="menu-item-icon">
+                        <a href="../View/empresa_produto.php" class="menu-item">
+                            <img src="../templates/assets/img/sacolas-de-compras.png" alt="Meus produtos" class="menu-item-icon">
                             <span>Produtos</span>
                         </a>
-                         <a href="empresa_loja.html" class="menu-item">
-                            <img src="img/loja empresa.png" alt="Sair" class="menu-item-icon">
+                         <a href="../View/empresa_loja.php" class="menu-item">
+                            <img src="../templates/assets/img/loja empresa.png" alt="Sair" class="menu-item-icon">
                             <span>minha loja</span>
                         </a>
 
-                         <a href="empresa_pedido.html" class="menu-item">
-                            <img src="img/pedido.png" alt="Sair" class="menu-item-icon">
+                         <a href="../View/empresa_pedido.php" class="menu-item">
+                            <img src="../templates/assets/img/pedido.png" alt="Sair" class="menu-item-icon">
                             <span>Pedidos</span>
                         </a>
         
-                        <a href="empresa_login.html" class="menu-item">
-                            <img src="img/sair.png" alt="Sair" class="menu-item-icon">
+                        <a href="../View/login_empresa.php" class="menu-item">
+                            <img src="../templates/assets/img/sair.png" alt="Sair" class="menu-item-icon">
                             <span>Sair</span>
                         </a>
                     </div>
@@ -96,8 +97,10 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
         </div>
     </header>
 
-    <!-- Hero Section -->
+     <!-- Hero Section -->
     <section class="hero">
+        <img src="../templates/assets/img/tetste painel profissional.png" alt="Imagem de fundo do painel profissional" class="hero-img">
+        <div class="hero-image-overlay"></div>
         <div class="hero-content">
             <div class="hero-blur-box">
                 <h1 class="hero-title">Orgulho em ter você com a gente!</h1>
@@ -105,6 +108,7 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
         </div>
     </section>
 
+    
     <!-- Seção de Produtos em Destaque -->
     <section class="featured-products">
         <div class="container">
@@ -115,7 +119,7 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
                 <!-- Card de Produto 1 -->
                 <div class="product-card">
                     <div class="product-image-placeholder">
-                                             <img src="img/product-1.png" alt="">
+                                             <img src="../templates/assets/img/product-1.png" alt="">
                     </div>
                     <div class="product-info-overlay">
                         <div class="product-rating">
@@ -130,7 +134,7 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
                 <!-- Card de Produto 2 -->
                 <div class="product-card-2">
                     <div class="product-image-placeholder">
-                        <img src="img/product-2.png" alt="">
+                        <img src="../templates/assets/img/product-2.png" alt="">
                     </div>
                     <div class="product-info-overlay">
                         <div class="product-rating">
@@ -145,7 +149,7 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
                 <!-- Card de Produto 3 -->
                 <div class="product-card">
                     <div class="product-image-placeholder">
-                         <img src="img/product-3.png" alt="">
+                         <img src="../templates/assets/img/product-3.png" alt="">
                     </div>
                     <div class="product-info-overlay">
                         <div class="product-rating">
@@ -172,14 +176,14 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
     <section class="donation">
         <div class="container donation-container">
             <div class="donation-content">
-                <h2 class="donation-title">Receba com o Agry<span class="donation-highlight">bem</span>!</h2>
+                <h2 class="donation-title">Doe com o Agry<span class="donation-highlight">bem</span>!</h2>
                 <p class="donation-text">
-                    No Agrybem, instituições como ONGs e igrejas podem se cadastrar para receber doações de alimentos vindas de produtores, comerciantes e consumidores solidários.
+                   No Agrybem, agricultores e comerciantes podem doar alimentos em bom estado, e instituições cadastradas como ONGs e igrejas podem receber as doações.
                 </p>
-                <a href="doacao_login.html" class="donation-button">Entre como instituição</a>
+                <a href="doacao_visualização_empresa.html" class="donation-button">participar</a>
             </div>
             <div class="donation-image">
-                <img src="img/agricultordoação" alt="Agricultor com vegetais" class="donation-img">
+                <img src="../templates/assets/img/agricultordoação" alt="Agricultor com vegetais" class="donation-img">
             </div>
         </div>
     </section>
@@ -221,7 +225,7 @@ $empreendimentoNome = $empreendimentoController->getEmpreendimentoName($_SESSION
             <div class="copyright-social">
                 
                 <a href="https://www.instagram.com/agrybem?igsh=MW55dW04M3B2bXJvMA%3D%3D&utm_source=qr" target="_blank">
-                    <img src="img/instagram (1).png" alt="Instagram Agrybem" class="icon social-icon">
+                    <img src="../templates/assets/img/instagram (1).png" alt="Instagram Agrybem" class="icon social-icon">
                 </a>
             </div>
         </div>

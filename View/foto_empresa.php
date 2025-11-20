@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../templates/assets/css/foto_empresa.css">
+    <link rel="stylesheet" href="../templates/assets/css/formulario_foto.css">
 </head>
 <body>
     <div class="page-wrapper">
@@ -84,12 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 
         <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
-            <!-- Botão Voltar -->
-            <a href="descricao_empresa.php" class="nav-button-side nav-button-prev">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </a>
+            
 
             <!-- Formulário -->
             <div class="form-container">
@@ -118,28 +113,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
                     <?php if ($registerMessage): ?>
                         <p class="error"><?php echo htmlspecialchars($registerMessage); ?></p>
                     <?php endif; ?>
+                    <!-- BOTÃO OK -->
+                    <div class="form-group form-button-ok">
+                        <button type="submit" class="ok-button">OK</button>
+                    </div>
         
-                    <!-- Botão Avançar -->
-                    <button type="submit" class="nav-button-side nav-button-next">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
+
                 </form>
             </div>
         </main>
 
-        <!-- FOOTER -->
-        <footer class="footer">
-            <div class="container footer-container">
-                <div class="footer-logo">
-                    <span class="footer-logo-text">Agry<span class="footer-logo-highlight">bem</span></span>
-                </div>
-                <div class="footer-tagline">
-                    Mais que produção, uma relação com você!
-                </div>
-            </div>
-        </footer>
+        
     </div>
         <script>
         // Preview selected image before upload (minimal, client-side)

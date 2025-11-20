@@ -143,7 +143,7 @@ $clienteNome = $clienteController->getClienteName($id, $nome);
         <section class="cards-section">
             <div class="cards-grid">
                 <!-- Cartão 1 -->
-            <a href="loja.html" class="card-link">
+            <a href="../View/loja.php" class="card-link">
         <div class="card">
             <div class="card-image">
                 <img src="../templates/assets/img/cesta rural.png" alt="Crédito Rural">

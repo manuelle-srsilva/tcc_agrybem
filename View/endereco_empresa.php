@@ -74,15 +74,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <!-- Conteúdo Principal -->
         <main class="main-content">
-            <!-- Botão Anterior (Esquerda) -->
-           <a href="informacao_empresa.php" class="nav-link">
-  <button class="nav-button-side nav-button-prev">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polyline points="15 18 9 12 15 6"></polyline>
-    </svg>
-  </button>
-</a>
-            
+          
+      
 
             <!-- Formulário -->
             <div class="form-container">
@@ -92,23 +85,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="form-group">
                         <label for="nome" class="form-label">CEP</label>
                           <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" class="esqueci-cep">Não sei meu CEP</a>
-                        <input type="number" id="nome" name="cep" class="cep" placeholder="">
+                        <input type="number" id="nome" name="cep" class="form-input" placeholder="">
                     </div>
 
                     <div class="form-group">
                         <label for="email" class="form-label">Rua</label>
-                        <input type="text" id="email" name="rua" class="rua" placeholder="">
+                        <input type="text" id="email" name="rua" class="form-input" placeholder="">
                     </div>
 
                     <div class="form-group">
                         <label for="cnpj" class="form-label">Número</label>
-                        <input type="number" id="cnpj" name="numero" class="numero" placeholder="">
+                        <input type="number" id="cnpj" name="numero" class="form-input" placeholder="">
     
                     </div>
 
-                    <div class="form-group">
+                       <div class="form-group">
                         <label for="senha" class="form-label">Bairro</label>
-                        <input type="text" id="senha" name="bairro" class="bairro" placeholder="">
+                        <input type="text" id="senha" name="bairro" class="form-input" placeholder="">
                     </div>
 
                     <div class="form-group">
@@ -125,29 +118,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="confirmacao-senha" class="form-label">Complemento</label>
                         <input type="text" id="confirmacao-senha" name="complemento" class="form-input" placeholder="">
                     </div>
+                      <!-- BOTÃO OK -->
+                    <div class="form-group form-button-ok">
+                        <button type="submit" class="ok-button">OK</button>
+                    </div>
 
-                    <!-- Botão Próximo (Direita) -->
-                    <button type="submit" href="descricao_empresa.php" class="nav-button-side nav-button-next">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
                 </form>
             </div>
 
         </main>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container footer-container">
-                <div class="footer-logo">
-                    <span class="footer-logo-text">Agry<span class="footer-logo-highlight">bem</span></span>
-                </div>
-                <div class="footer-tagline">
-                    Mais que produção, uma relação com você!
-                </div>
-            </div>
-        </footer>
+      
     </div>
 </body>
 </html>
