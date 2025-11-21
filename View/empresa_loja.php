@@ -4,6 +4,7 @@ require_once '../vendor/autoload.php';
 
 use Controller\EmpreendimentoController;
 use Controller\EnderecoController;
+use Controller\ProdutoController;
 
 $empreendimento_id = $_SESSION['id_empreendimento'] ?? null;
 
@@ -15,10 +16,12 @@ if (!$empreendimento_id) {
 
 $empreendimentoController = new EmpreendimentoController();
 $enderecoController = new EnderecoController();
+$produtoController = new ProdutoController();
 
 // Busca as informações do empreendimento
 $empreendimentoInfo = $empreendimentoController->getempreendimentoInfo($empreendimento_id);
 $empreendimentoFoto = $empreendimentoController->getEmpreendimentoFoto($empreendimento_id);
+$produtos = $produtoController->getProdutosByEmpreendimento($empreendimento_id);
 
 // Busca as informações do endereço do empreendimento
 $enderecoInfo = null;
@@ -261,116 +264,39 @@ $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=
           
 
             <div class="product-cards-container">
-                <!-- Card de Produto 1 -->
-                <div class="product-card" data-product-id="1" data-product-name="Banana" data-product-category="Fruta" data-product-price="17.50" data-product-image="img/Post instagram dia do feirante moderno verde (21) 1.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/Post instagram dia do feirante moderno verde (21) 1.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
+                    <?php if (!empty($produtos)): ?>
+                        <?php foreach ($produtos as $produto): ?>
 
-                        <h3 class="product-name">Maçã</h3>
-                     <h3 class="product-description">Fruta</br>17,50 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="1">+</button>
-                </div>
+                            <?php
+                                $foto_base64 = base64_encode($produto['foto']);
+                                $foto_src = 'data:image/jpeg;base64,' . $foto_base64;
+                                $preco_formatado = number_format($produto['preco'], 2, ',', '.');
+                            ?>
 
-                <!-- Card de Produto 2 -->
-                <div class="product-card" data-product-id="2" data-product-name="Tomate" data-product-category="Legume" data-product-price="6.00" data-product-image="img/tomate.png">
-                    <div class="product-image-placeholder">
-                                             <img src="../templates/assets/img/Post instagram dia do feirante moderno verde (23) 1.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
+                            <div class="product-card"
+                                data-product-id="<?php echo $produto['id']; ?>"
+                                data-product-name="<?php echo htmlspecialchars($produto['nome']); ?>"
+                                data-product-category="<?php echo htmlspecialchars($produto['categoria']); ?>"
+                                data-product-price="<?php echo $produto['preco']; ?>"
+                                data-product-image="<?php echo $foto_src; ?>">
 
-                        <h3 class="product-name">Abacaxi</h3>
-                     <h3 class="product-description">Fruta</br>R$ 6,00 kg</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="2">+</button>
-                </div>
+                                <div class="product-image-placeholder">
+                                    <img src="<?php echo $foto_src; ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
+                                </div>
 
-                <!-- Card de Produto 3 -->
-                <div class="product-card" data-product-id="3" data-product-name="Alface" data-product-category="Verdura" data-product-price="3.50" data-product-image="img/alface.png">
-                    <div class="product-image-placeholder">
-                                             <img src="../templates/assets/img/alface.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
+                                <div class="product-info-overlay">
+                                    <h3 class="product-name"><?php echo htmlspecialchars($produto['nome']); ?></h3>
+                                    <h3 class="product-description">
+                                        <?php echo htmlspecialchars($produto['categoria']); ?><br>
+                                        R$ <?php echo $preco_formatado; ?>
+                                    </h3>
+                                </div>
+                            </div>
 
-                        <h3 class="product-name">Alface</h3>
-                     <h3 class="product-description">Verdura</br>3,50 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="3">+</button>
-                </div>
-
-                <!-- Card de Produto 4 -->
-                <div class="product-card" data-product-id="4" data-product-name="Batata" data-product-category="Raiz" data-product-price="4.20" data-product-image="img/batata.png">
-                    <div class="product-image-placeholder">
-                                             <img src="../templates/assets/img/batata.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Batata</h3>
-                     <h3 class="product-description">Raiz</br>4,20 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="4">+</button>
-                </div>
-                 <!-- Card de Produto 4 -->
-                <div class="product-card" data-product-id="4" data-product-name="Batata" data-product-category="Raiz" data-product-price="4.20" data-product-image="img/batata.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/batata.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Batata</h3>
-                     <h3 class="product-description">Raiz</br>4,20 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="4">+</button>
-                </div>
-
-                 <!-- Card de Produto 4 -->
-                <div class="product-card" data-product-id="4" data-product-name="Batata" data-product-category="Raiz" data-product-price="4.20" data-product-image="img/batata.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/batata.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Batata</h3>
-                     <h3 class="product-description">Raiz</br>4,20 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="4">+</button>
-                </div>
-                 <!-- Card de Produto 4 -->
-                <div class="product-card" data-product-id="4" data-product-name="Batata" data-product-category="Raiz" data-product-price="4.20" data-product-image="img/batata.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/batata.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Batata</h3>
-                     <h3 class="product-description">Raiz</br>4,20 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="4">+</button>
-                </div>
-
-                <!-- Card de Produto 5 -->
-                <div class="product-card" data-product-id="5" data-product-name="Maçã" data-product-category="Fruta" data-product-price="9.90" data-product-image="img/maca.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/maca.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Maçã</h3>
-                     <h3 class="product-description">Fruta</br>9,90 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="5">+</button>
-                </div>
-
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Nenhum produto encontrado.</p>
+                    <?php endif; ?>
             </div>
         </div>
     </section>

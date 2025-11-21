@@ -1,195 +1,244 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrybem - Pedidos Recebidos (Empreendedor)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../templates/assets/css/empresa_pedido.css"> 
 
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
-            </div>
-            <nav class="nav">
-                <a href="../View/painel_profissional_empresa.php" class="nav-button">Voltar</a>
-            </nav>
-        </div>
-    </header>
+                    <?php
+                    session_start();
+                    require_once __DIR__ . '/../vendor/autoload.php';
+                    use Model\Order;
+                    use Model\Produto;
 
-    <main class="orders-page-content">
-        <div class="container">
-            <h1 class="orders-title">Pedidos Recebidos </h1>
-            
-            <!-- Seção de Filtros -->
-            <div class="orders-filters">
-                <div class="filter-item">
-                    <label for="filter-date">Selecionar Data:</label>
-                    <input type="date" id="filter-date" value="2025-11-05">
-                </div>
-                <div class="filter-item">
-                    <label for="filter-status">Status:</label>
-                    <select id="filter-status">
-                        <option value="all">Todos</option>
-                        <option value="pending" selected>Pendentes</option>
-                        <option value="finished">Finalizados</option>
-                    </select>
-                </div>
-            </div>
+                    // determine empresa id from session
+                    $empresa_id = null;
+                    $keys = ['empresa_id','id_empresa','empresa','empreendimento_id','id_empreendimento'];
+                    foreach($keys as $k){
+                        if(isset($_SESSION[$k])){ $empresa_id = $_SESSION[$k]; break; }
+                    }
 
-            <div class="orders-list">
-                
-                <!-- Grupo de Pedidos por Data: 05/11/2025 -->
-                <div class="order-group">
-                    <h2 class="group-title">📅 Pedidos de 05/11/2025</h2>
+                    $orderModel = new Order();
+                    $produtoModel = new Produto();
+                    $orders = [];
+                    if($empresa_id){
+                        $orders = $orderModel->getOrdersByEmpresa($empresa_id);
+                    }
+                    ?>
+                    <!DOCTYPE html>
+                    <html lang="pt-BR">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Agrybem - Pedidos Recebidos (Empreendedor)</title>
+                        <link rel="preconnect" href="https://fonts.googleapis.com">
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+                        <link rel="stylesheet" href="../templates/assets/css/empresa_pedido.css">
 
-                    <!-- Card de Pedido 1 (Pendente) -->
-                    <div class="order-card">
-                        <div class="card-header">
-                            <h3 class="card-title">Pedido #2025001</h3>
-                            <!-- NOVO DROPDOWN DE STATUS -->
-                            <div class="status-dropdown-container">
-                                <select class="status-select status-pending" onchange="updateStatus(this)">
-                                    <option value="pending" selected>🟡 Pendente</option>
-                                    <option value="finished">🟢 Finalizado</option>
-                                </select>
+                    </head>
+                    <body>
+                        <header class="header">
+                            <div class="container">
+                                <div class="logo">
+                                    <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
+                                </div>
+                                <nav class="nav">
+                                    <a href="../View/painel_profissional_empresa.php" class="nav-button">Voltar</a>
+                                </nav>
                             </div>
-                        </div>
-                        <div class="card-meta">
-                            <span class="meta-item"><span class="meta-label">Cliente:</span> Ana Paula Silva</span>
-                            <span class="meta-item"><span class="meta-label">Telefone:</span> (81) 91234-5678</span>
-                            <span class="meta-item"><span class="meta-label">Data de Retirada:</span> 05/11/2025</span>
-                            <span class="meta-item"><span class="meta-label">Horário:</span> 11:00</span>
-                        </div>
-                        <ul class="card-items-list">
-                            <li class="item-list-title">Produtos:</li>
-                            <li class="card-item">
-                                <span class="item-name">Tomate Cereja Orgânico</span>
-                                <span class="item-quantity">2 kg</span>
-                            </li>
-                            <li class="card-item">
-                                <span class="item-name">Alface Crespa</span>
-                                <span class="item-quantity">3 un</span>
-                            </li>
-                        </ul>
-                    </div>
+                        </header>
 
-                    <!-- Card de Pedido 4 (Pendente) -->
-                    <div class="order-card">
-                        <div class="card-header">
-                            <h3 class="card-title">Pedido #2025004</h3>
-                            <!-- NOVO DROPDOWN DE STATUS -->
-                            <div class="status-dropdown-container">
-                                <select class="status-select status-pending" onchange="updateStatus(this)">
-                                    <option value="pending" selected>🟡 Pendente</option>
-                                    <option value="finished">🟢 Finalizado</option>
-                                </select>
+                        <main class="orders-page-content">
+                            <div class="container">
+                                <h1 class="orders-title">Pedidos Recebidos</h1>
+
+                                <div class="orders-filters">
+                                    <div class="filter-item">
+                                        <label for="filter-date">Selecionar Data:</label>
+                                        <input type="date" id="filter-date">
+                                    </div>
+                                    <div class="filter-item">
+                                        <label for="filter-status">Status:</label>
+                                        <select id="filter-status">
+                                            <option value="all" selected>Todos</option>
+                                            <option value="pending">Pendentes</option>
+                                            <option value="finished">Entregues</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="orders-list">
+                                    <?php
+                                    if(empty($orders)){
+                                        echo '<p>Sem pedidos para sua empresa no momento.</p>';
+                                    } else {
+                                        // group by pickup_date (or created_at)
+                                        $groups = [];
+                                        foreach($orders as $o){
+                                            $date = $o['pickup_date'] ?: substr($o['created_at'],0,10);
+                                            $groups[$date][] = $o;
+                                        }
+
+                                        foreach($groups as $date => $group){
+                                            echo '<div class="order-group">';
+                                            echo '<h2 class="group-title">📅 Pedidos de ' . date('d/m/Y', strtotime($date)) . '</h2>';
+                                    foreach($group as $o){
+                                        $status = $o['status'];
+                                        $statusBadge = 'status-pendente';
+                                        $statusLabel = 'Pendente';
+                                        if($status === 'pending') { $statusBadge = 'status-pendente'; $statusLabel = 'Pendente'; }
+                                        elseif($status === 'in_transit'){ $statusBadge = 'status-transito'; $statusLabel = 'Em Trânsito'; }
+                                        elseif($status === 'delivered' || $status === 'finished'){ $statusBadge = 'status-entregue'; $statusLabel = 'Finalizado'; }
+
+                                        $order_date_attr = date('Y-m-d', strtotime($o['pickup_date'] ?: $o['created_at']));
+                                        $order_status_attr = htmlspecialchars($o['status']);
+                                        echo '<div class="order-card" data-order-status="' . $order_status_attr . '" data-order-date="' . $order_date_attr . '">';
+                                        echo '<div class="card-header">';
+                                        echo '<h3 class="card-title">Pedido #' . htmlspecialchars($o['id']) . '</h3>';
+                                        // status dropdown (no centro do card removido; apenas select estilizado)
+                                        // render select with data-order-id so JS can be called with the element
+                                        $selPending = ($status === 'pending') ? 'selected' : '';
+                                        $selFinished = ($status === 'finished' || $status === 'delivered') ? 'selected' : '';
+                                        $selectClass = ($status === 'pending') ? 'status-select status-pending' : 'status-select status-finished';
+                                        echo '<div class="status-dropdown-container">';
+                                        echo '<select data-order-id="' . intval($o['id']) . '" class="' . $selectClass . '" onchange="updateStatus(this)">';
+                                        echo '<option value="pending" ' . $selPending . '>🟡 Pendente</option>';
+                                        echo '<option value="finished" ' . $selFinished . '>🟢 Entregue</option>';
+                                        echo '</select>';
+                                        echo '</div>';
+
+                                        echo '</div>';
+                                                echo '<div class="card-meta">';
+                                                echo '<span class="meta-item"><span class="meta-label">Cliente:</span> ' . htmlspecialchars($o['cliente_nome'] ?? 'Cliente') . '</span>';
+                                                echo '<span class="meta-item"><span class="meta-label">Data de Retirada:</span> ' . date('d/m/Y', strtotime($o['pickup_date'] ?? $o['created_at'])) . '</span>';
+                                                echo '<span class="meta-item"><span class="meta-label">Horário:</span> ' . htmlspecialchars($o['pickup_time'] ?? '') . '</span>';
+                                                echo '</div>';
+
+                                                echo '<ul class="card-items-list">';
+                                                echo '<li class="item-list-title">Produtos:</li>';
+                                                foreach($o['items'] as $it){
+                                                    $prodName = 'Produto #' . $it['produto_id'];
+                                                    try{
+                                                        $p = $produtoModel->getProdutoInfo($it['produto_id']);
+                                                        if(!empty($p) && !empty($p['nome'])) $prodName = $p['nome'];
+                                                    } catch(Exception $e){ }
+
+                                                    $unit = $it['unidade'] ?? '';
+                                                    $qty = $it['quantidade'] ?? 0;
+                                                    $dec = ($unit === 'un') ? 0 : 2;
+                                                    $qtyFormatted = number_format((float)$qty, $dec, ',', '');
+
+                                                    echo '<li class="card-item">';
+                                                    echo '<span class="item-name">' . htmlspecialchars($prodName) . '</span>';
+                                                    echo '<span class="item-quantity">' . htmlspecialchars($qtyFormatted) . ' ' . htmlspecialchars($unit) . '</span>';
+                                                    echo '</li>';
+                                                }
+                                                echo '</ul>';
+
+                                                echo '</div>'; // order-card
+                                            }
+                                            echo '</div>'; // order-group
+                                        }
+                                    }
+                                    ?>
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="card-meta">
-                            <span class="meta-item"><span class="meta-label">Cliente:</span> Maria Oliveira</span>
-                            <span class="meta-item"><span class="meta-label">Telefone:</span> (81) 99876-5432</span>
-                            <span class="meta-item"><span class="meta-label">Data de Retirada:</span> 05/11/2025</span>
-                            <span class="meta-item"><span class="meta-label">Horário:</span> 16:30</span>
-                        </div>
-                        <ul class="card-items-list">
-                            <li class="item-list-title">Produtos:</li>
-                            <li class="card-item">
-                                <span class="item-name">Cenoura Orgânica</span>
-                                <span class="item-quantity">1 kg</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                        </main>
 
-                <!-- Grupo de Pedidos por Data: 06/11/2025 -->
-                <div class="order-group">
-                    <h2 class="group-title">📅 Pedidos de 06/11/2025</h2>
-
-                    <!-- Card de Pedido 2 (Finalizado) -->
-                    <div class="order-card">
-                        <div class="card-header">
-                            <h3 class="card-title">Pedido #2025002</h3>
-                            <!-- NOVO DROPDOWN DE STATUS -->
-                            <div class="status-dropdown-container">
-                                <select class="status-select status-finished" onchange="updateStatus(this)">
-                                    <option value="pending">🟡 Pendente</option>
-                                    <option value="finished" selected>🟢 Finalizado</option>
-                                </select>
-                            </div>
+                        <script src="js/pedido.js"></script>
+                        <!-- Api Vlibras -->
+                        <div vw class="enabled">
+                        <div vw-access-button class="active"></div>
+                        <div vw-plugin-wrapper>
+                            <div class="vw-plugin-top-wrapper"></div>
                         </div>
-                        <div class="card-meta">
-                            <span class="meta-item"><span class="meta-label">Cliente:</span> João Victor Souza</span>
-                            <span class="meta-item"><span class="meta-label">Telefone:</span> (81) 93456-7890</span>
-                            <span class="meta-item"><span class="meta-label">Data de Retirada:</span> 06/11/2025</span>
-                            <span class="meta-item"><span class="meta-label">Horário:</span> 14:30</span>
                         </div>
-                        <ul class="card-items-list">
-                            <li class="item-list-title">Produtos:</li>
-                            <li class="card-item">
-                                <span class="item-name">Ovos Caipiras</span>
-                                <span class="item-quantity">12 un</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Grupo de Pedidos por Data: 02/11/2025 -->
-                <div class="order-group">
-                    <h2 class="group-title">📅 Pedidos de 02/11/2025</h2>
+                        <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+                        <script>
+                        new window.VLibras.Widget('https://vlibras.gov.br/app');
+                        </script>
 
-                    <!-- Card de Pedido 3 (Finalizado) -->
-                    <div class="order-card">
-                        <div class="card-header">
-                            <h3 class="card-title">Pedido #2025003</h3>
-                            <!-- NOVO DROPDOWN DE STATUS -->
-                            <div class="status-dropdown-container">
-                                <select class="status-select status-finished" onchange="updateStatus(this)">
-                                    <option value="pending">🟡 Pendente</option>
-                                    <option value="finished" selected>🟢 Finalizado</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="card-meta">
-                            <span class="meta-item"><span class="meta-label">Cliente:</span> Carla Ribeiro</span>
-                            <span class="meta-item"><span class="meta-label">Telefone:</span> (81) 95555-4444</span>
-                            <span class="meta-item"><span class="meta-label">Data de Retirada:</span> 02/11/2025</span>
-                            <span class="meta-item"><span class="meta-label">Horário:</span> 08:00</span>
-                        </div>
-                        <ul class="card-items-list">
-                            <li class="item-list-title">Produtos:</li>
-                            <li class="card-item">
-                                <span class="item-name">Pão Integral de Fermentação Natural</span>
-                                <span class="item-quantity">1 unidade</span>
-                            </li>
-                            <li class="card-item">
-                                <span class="item-name">Baguete Tradicional</span>
-                                <span class="item-quantity">2 unidades</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                        <script>
+                        // Filters: data and status for empresa_pedido.php
+                        (function(){
+                            const dateInput = document.getElementById('filter-date');
+                            const statusSelect = document.getElementById('filter-status');
+                            if(!dateInput && !statusSelect) return;
 
-            </div>
-        </div>
-    </main>
+                            function applyFilters(){
+                                const groups = document.querySelectorAll('.order-group');
+                                const selDate = dateInput ? dateInput.value : '';
+                                const selStatus = statusSelect ? statusSelect.value : 'all';
 
-    <script src="js/pedido.js"></script>
-     <!-- Api Vlibras -->
-    <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
-    </div>
-    </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
-</body>
-</html>
+                                groups.forEach(group => {
+                                    let anyVisible = false;
+                                    const cards = group.querySelectorAll('.order-card');
+                                    cards.forEach(card => {
+                                        const cardDate = card.dataset.orderDate || '';
+                                        const cardStatus = card.dataset.orderStatus || '';
+
+                                        let matchDate = true;
+                                        if(selDate){ matchDate = (cardDate === selDate); }
+
+                                        let matchStatus = true;
+                                        if(selStatus && selStatus !== 'all'){
+                                            matchStatus = (cardStatus === selStatus);
+                                        }
+
+                                        if(matchDate && matchStatus){
+                                            card.style.display = '';
+                                            anyVisible = true;
+                                        } else {
+                                            card.style.display = 'none';
+                                        }
+                                    });
+                                    group.style.display = anyVisible ? '' : 'none';
+                                });
+                            }
+
+                            // force status select to 'all' on load to avoid browser-preserved state
+                            if(statusSelect) statusSelect.value = 'all';
+                            if(dateInput) dateInput.addEventListener('change', applyFilters);
+                            if(statusSelect) statusSelect.addEventListener('change', applyFilters);
+                            applyFilters();
+                        })();
+                        </script>
+                        <script>
+                        async function updateStatus(a, b){
+                            // Accept either (orderId, status) or (selectElement)
+                            let orderId, status, selectEl;
+                            if(a && typeof a === 'object' && a.tagName === 'SELECT'){
+                                selectEl = a;
+                                orderId = selectEl.dataset.orderId;
+                                status = selectEl.value;
+                            } else {
+                                orderId = a;
+                                status = b;
+                                // try to find select element
+                                selectEl = document.querySelector('select[data-order-id="' + orderId + '"]');
+                            }
+
+                            if(!orderId || !status) return alert('Parâmetros inválidos');
+
+                            try{
+                                const resp = await fetch('../Controller/OrderController.php', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                                    body: JSON.stringify({ action: 'update_status', order_id: orderId, status: status })
+                                });
+                                const data = await resp.json();
+                                if(data.success){
+                                    // update select class to reflect new status
+                                    if(selectEl){
+                                        if(status === 'pending'){
+                                            selectEl.className = 'status-select status-pending';
+                                        } else if(status === 'finished' || status === 'delivered'){
+                                            selectEl.className = 'status-select status-finished';
+                                        }
+                                    }
+                                } else {
+                                    alert('Erro ao atualizar status: ' + (data.message || ''));
+                                }
+                            }catch(e){
+                                alert('Erro de rede ao atualizar status');
+                            }
+                        }
+                        </script>
+                    </body>
+                    </html>

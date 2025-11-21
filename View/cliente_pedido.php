@@ -25,119 +25,106 @@
     <main class="orders-page-content">
         <div class="container">
             <h1 class="orders-title">Meus Pedidos</h1>
-            
-            <!-- Seção de Filtros -->
+
             <div class="orders-filters">
                 <div class="filter-item">
                     <label for="filter-date">Selecionar Data:</label>
-                    <input type="date" id="filter-date" value="2025-11-05">
+                    <input type="date" id="filter-date">
                 </div>
                 <div class="filter-item">
                     <label for="filter-status">Status:</label>
                     <select id="filter-status">
-                        <option value="all">Todos</option>
-                        <option value="retirada" selected>Retirado</option>
+                        <option value="all" selected>Todos</option>
+                        <option value="retirada">Retirado</option>
                         <option value="enviado">Enviado</option>
                     </select>
                 </div>
             </div>
-
             <div class="orders-list">
-                
-                <!-- Grupo de Pedidos por Data: 05/11/2025 -->
-                <div class="order-group">
-                    <h2 class="group-title">📅 Pedidos para 05/11/2025</h2>
+            <?php
+            require_once __DIR__ . '/../vendor/autoload.php';
+            use Model\Order;
+            use Model\Produto;
+            session_start();
 
-                    <!-- Card de Pedido 1 (Status: Enviado - Verde) -->
-                    <div class="order-card">
-                        <div class="card-header">
-                            <h2 class="card-title">Pedido #2025001</h2>
-                            <!-- Status Fixo: Enviado (Verde) -->
-                            <span class="card-status status-enviado">🟢 Enviado</span>
-                        </div>
-                        <div class="card-meta">
-                            <span class="meta-item"><span class="meta-label">Loja:</span> Fazenda Orgânica do Seu João</span>
-                            <span class="meta-item"><span class="meta-label">Data Agendada:</span> 05/11/2025</span>
-                            <span class="meta-item"><span class="meta-label">Horário:</span> 11:00</span>
-                        </div>
-                        <ul class="card-items-list">
-                            <li class="item-list-title">Itens Solicitados:</li>
-                            <li class="card-item">
-                                <span class="item-name">Tomate Cereja Orgânico</span>
-                                <span class="item-quantity">2kg</span>
-                            </li>
-                            <li class="card-item">
-                                <span class="item-name">Alface Crespa Hidropônica</span>
-                                <span class="item-quantity">3 unidades</span>
-                            </li>
-                            <li class="card-item">
-                                <span class="item-name">Ovos Caipiras Grandes</span>
-                                <span class="item-quantity">1 dúzia</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            // determine client id from session (try several keys)
+            $cliente_id = null;
+            $keys = ['cliente_id','id_cliente','id','cliente','user','user_id','usuario'];
+            foreach($keys as $k){
+                if(isset($_SESSION[$k])){
+                    if(is_array($_SESSION[$k]) && isset($_SESSION[$k]['id'])){ $cliente_id = $_SESSION[$k]['id']; break; }
+                    $cliente_id = $_SESSION[$k]; break;
+                }
+            }
 
-                <!-- Grupo de Pedidos por Data: 06/11/2025 -->
-                <div class="order-group">
-                    <h2 class="group-title">📅 Pedidos para 06/11/2025</h2>
+            $orderModel = new Order();
+            $produtoModel = new Produto();
+            $orders = [];
+            if($cliente_id){
+                $orders = $orderModel->getOrdersByCliente($cliente_id);
+            }
 
-                    <!-- Card de Pedido 2 (Status: Retirada - Amarelo) -->
-                    <div class="order-card">
-                        <div class="card-header">
-                            <h2 class="card-title">Pedido #2025002</h2>
-                            <!-- Status Fixo: Retirada (Amarelo) -->
-                            <span class="card-status status-retirada">🟡 Retirado</span>
-                        </div>
-                        <div class="card-meta">
-                            <span class="meta-item"><span class="meta-label">Loja:</span> Quitanda da Dona Maria</span>
-                            <span class="meta-item"><span class="meta-label">Data Solicitada:</span> 06/11/2025</span>
-                            <span class="meta-item"><span class="meta-label">Horário:</span> 15:00</span>
-                        </div>
-                        <ul class="card-items-list">
-                            <li class="item-list-title">Itens Solicitados:</li>
-                            <li class="card-item">
-                                <span class="item-name">Manga Palmer</span>
-                                <span class="item-quantity">4 unidades</span>
-                            </li>
-                            <li class="card-item">
-                                <span class="item-name">Laranja Pêra</span>
-                                <span class="item-quantity">5kg</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Grupo de Pedidos por Data: 02/11/2025 -->
-                <div class="order-group">
-                    <h2 class="group-title">📅 Pedidos para 02/11/2025</h2>
+            if(empty($orders)){
+                echo '<p>Você ainda não tem pedidos.</p>';
+            } else {
+                // group by pickup_date (or created_at if null)
+                $groups = [];
+                foreach($orders as $o){
+                    $date = $o['pickup_date'] ?: substr($o['created_at'],0,10);
+                    $groups[$date][] = $o;
+                }
+                foreach($groups as $date => $group){
+                    echo '<div class="order-group">';
+                    echo '<h2 class="group-title">📅 Pedidos para ' . date('d/m/Y', strtotime($date)) . '</h2>';
+                    foreach($group as $o){
+                        // Map DB status to client-friendly badge with classes
+                        $order_date_attr = date('Y-m-d', strtotime($o['pickup_date'] ?? $o['created_at']));
+                        $order_status_attr = htmlspecialchars($o['status']);
+                        echo '<div class="order-card compact" data-order-status="' . $order_status_attr . '" data-order-date="' . $order_date_attr . '">';
+                        echo '<div class="card-header">';
+                        echo '<h3 class="card-title">Pedido #' . htmlspecialchars($o['id']) . '</h3>';
+                        if($o['status'] === 'pending'){
+                            echo '<span class="card-status status-retirada">🟡 Enviado</span>';
+                        } elseif($o['status'] === 'finished' || $o['status'] === 'delivered'){
+                            echo '<span class="card-status status-enviado">🟢 Retirado</span>';
+                        } else {
+                            // fallback
+                            echo '<span class="card-status status-reitrada">🟡 ' . htmlspecialchars(ucfirst($o['status'])) . '</span>';
+                        }
+                        echo '</div>';
+                        echo '<div class="card-meta compact-meta">';
+                        echo '<span class="meta-item"><strong>Loja:</strong> ' . htmlspecialchars($o['empresa_nome'] ?? 'Loja') . '</span>';
+                        echo '<span class="meta-item"><strong>Data:</strong> ' . date('d/m/Y', strtotime($o['pickup_date'] ?? $o['created_at'])) . '</span>';
+                        echo '<span class="meta-item"><strong>Hora:</strong> ' . htmlspecialchars($o['pickup_time'] ?? '') . '</span>';
+                        echo '</div>';
+                        echo '<ul class="card-items-list compact-list">';
+                        echo '<li class="item-list-title">Itens Solicitados:</li>';
+                        foreach($o['items'] as $it){
+                            // get product name from Produto model
+                            $prodName = 'Produto #' . $it['produto_id'];
+                            try{
+                                $p = $produtoModel->getProdutoInfo($it['produto_id']);
+                                if(!empty($p) && !empty($p['nome'])) $prodName = $p['nome'];
+                            } catch(Exception $e){ }
 
-                    <!-- Card de Pedido 3 (Status: Enviado - Verde) -->
-                    <div class="order-card">
-                        <div class="card-header">
-                            <h2 class="card-title">Pedido #2025003</h2>
-                            <!-- Status Fixo: Enviado (Verde) -->
-                            <span class="card-status status-enviado">🟢 Enviado</span>
-                        </div>
-                        <div class="card-meta">
-                            <span class="meta-item"><span class="meta-label">Loja:</span> Pães Artesanais do Bairro</span>
-                            <span class="meta-item"><span class="meta-label">Data Agendada:</span> 02/11/2025</span>
-                            <span class="meta-item"><span class="meta-label">Horário:</span> 08:00</span>
-                        </div>
-                        <ul class="card-items-list">
-                            <li class="item-list-title">Itens Solicitados:</li>
-                            <li class="card-item">
-                                <span class="item-name">Pão Integral de Fermentação Natural</span>
-                                <span class="item-quantity">1 unidade</span>
-                            </li>
-                            <li class="card-item">
-                                <span class="item-name">Baguete Tradicional</span>
-                                <span class="item-quantity">2 unidades</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                            // format quantity: kg/g -> 2 decimals max, un -> 0 decimals
+                            $unit = $it['unidade'] ?? '';
+                            $qty = $it['quantidade'] ?? 0;
+                            $dec = ($unit === 'un') ? 0 : 2;
+                            $qtyFormatted = number_format((float)$qty, $dec, ',', '');
 
+                            echo '<li class="card-item">';
+                            echo '<span class="item-name">' . htmlspecialchars($prodName) . '</span>';
+                            echo '<span class="item-quantity">' . htmlspecialchars($qtyFormatted) . ' ' . htmlspecialchars($unit) . '</span>';
+                            echo '</li>';
+                        }
+                        echo '</ul>';
+                        echo '</div>'; // order-card
+                    }
+                    echo '</div>'; // group
+                }
+            }
+            ?>
             </div>
         </div>
     </main>
@@ -155,3 +142,61 @@
     </script>
 </body>
 </html>
+
+<script>
+// Filters: data and status for cliente_pedido.php
+(function(){
+    const dateInput = document.getElementById('filter-date');
+    const statusSelect = document.getElementById('filter-status');
+    if(!dateInput && !statusSelect) return;
+
+    function mapDbStatusToClientLabel(dbStatus){
+        if(!dbStatus) return '';
+        if(dbStatus === 'pending') return 'enviado';
+        if(dbStatus === 'finished' || dbStatus === 'delivered') return 'retirada';
+        // other statuses fallback to their raw name
+        return dbStatus;
+    }
+
+    function applyFilters(){
+        const groups = document.querySelectorAll('.order-group');
+        const selDate = dateInput ? dateInput.value : '';
+        const selStatus = statusSelect ? statusSelect.value : 'all';
+
+        groups.forEach(group => {
+            let anyVisible = false;
+            const cards = group.querySelectorAll('.order-card');
+            cards.forEach(card => {
+                const cardDate = card.dataset.orderDate || '';
+                const cardDbStatus = card.dataset.orderStatus || '';
+                const cardClientStatus = mapDbStatusToClientLabel(cardDbStatus);
+
+                let matchDate = true;
+                if(selDate){ matchDate = (cardDate === selDate); }
+
+                let matchStatus = true;
+                if(selStatus && selStatus !== 'all'){
+                    // status options: 'retirada' or 'enviado'
+                    matchStatus = (cardClientStatus === selStatus);
+                }
+
+                if(matchDate && matchStatus){
+                    card.style.display = '';
+                    anyVisible = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            // hide group if no visible cards
+            group.style.display = anyVisible ? '' : 'none';
+        });
+    }
+
+    // force status select to 'all' on load to avoid browser-preserved state
+    if(statusSelect) statusSelect.value = 'all';
+    if(dateInput) dateInput.addEventListener('change', applyFilters);
+    if(statusSelect) statusSelect.addEventListener('change', applyFilters);
+    // initial apply
+    applyFilters();
+})();
+</script>

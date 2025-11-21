@@ -117,13 +117,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
     <section class="cards-section">
         <div class="cards-grid">
 			<?php if (!empty($produtos)): ?>
-	                <?php foreach ($produtos as $produto): ?>
+                    <?php foreach ($produtos as $produto): ?>
 	                    <?php
 	                        $foto_base64 = base64_encode($produto['foto']);
 	                        $foto_src = 'data:image/jpeg;base64,' . $foto_base64;
 	                        $preco_formatado = 'R$ ' . number_format($produto['preco'], 2, ',', '.');
 	                    ?>
-	                    <div class="card" data-id="<?php echo $produto['id']; ?>" data-nome="<?php echo htmlspecialchars($produto['nome']); ?>" data-preco="<?php echo $preco_formatado; ?>" data-categoria="<?php echo htmlspecialchars($produto['categoria']); ?>">
+                        <div class="card" data-id="<?php echo $produto['id']; ?>" data-nome="<?php echo htmlspecialchars($produto['nome']); ?>" data-preco="<?php echo $preco_formatado; ?>" data-categoria="<?php echo htmlspecialchars($produto['categoria']); ?>">
 	                        <div class="edit-icon" data-id="<?php echo $produto['id']; ?>"><i class="fas fa-pencil-alt"></i></div>
 	                        <div class="card-image">
 	                            <img src="<?php echo $foto_src; ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
@@ -195,6 +195,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    <script>
+    // Filtro por nome do produto (empresa_produto.php)
+    (function(){
+        const searchInput = document.querySelector('.search-section .search-input');
+        const cardsGrid = document.querySelector('.cards-grid');
+        if(!searchInput || !cardsGrid) return;
+        searchInput.addEventListener('input', function(){
+            const q = this.value.trim().toLowerCase();
+            const cards = cardsGrid.querySelectorAll('.card');
+            cards.forEach(card => {
+                const name = (card.dataset.nome || '').toLowerCase();
+                if(!q || name.indexOf(q) !== -1) card.style.display = '';
+                else card.style.display = 'none';
+            });
+        });
+    })();
     </script>
 		</body>
 		</html>

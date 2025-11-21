@@ -87,7 +87,7 @@ $empreendimentos = $empreendimentoController->getAllEmpreendimentos();
     
     <section class="products">
             <div class="container">
-                <h2 class="section-title"> Escolha lojas locais e leve frescor e sabor pra sua mesa.</h2>
+                <h2 class="section-title"> Escolha lojas locais e leve frescor e sabor pra sua mesa</h2>
                 <div class="products-grid">
                     <div class="product-card">
                         <img src="../templates/assets/img/propaganda cliente principal 1.png" alt="Sementes" class="product-img">
@@ -119,7 +119,7 @@ $empreendimentos = $empreendimentoController->getAllEmpreendimentos();
             <div class="donation-content">
                 <h2 class="donation-title">Doe com o Agry<span class="donation-highlight">bem</span>!</h2>
                 <p class="donation-text">
-                  No Agrybem, você também pode fazer a diferença, doe alimentos em bom estado e ajude ONGs e instituições da sua região.
+                  No Agrybem, você também pode fazer a diferença, doe alimentos em bom estado e ajude ONGs e instituições da sua região
                 </p>
                 <a href="../View/doacao_visualizacao_cliente.php" class="donation-button">Participar</a>
             </div>
@@ -132,7 +132,7 @@ $empreendimentos = $empreendimentoController->getAllEmpreendimentos();
      <!-- Seção de Pesquisa -->
         <section class="search-section">
             
-            <h2 class="search-title">Descubra lojas perto de você.</h2>
+            <h2 class="search-title">Descubra lojas perto de você</h2>
             <div class="search-container">
                 <div class="search-input-wrapper">
                     <input type="text" class="search-input" placeholder="Pesquisar...">
@@ -156,8 +156,8 @@ $empreendimentos = $empreendimentoController->getAllEmpreendimentos();
                             $link_loja = "../View/loja.php?id=" . $empreendimento['id'];
                             $cidade_bairro = htmlspecialchars($empreendimento['cidade']) . ' (' . htmlspecialchars($empreendimento['bairro']) . ')';
                         ?>
-                        <a href="<?php echo $link_loja; ?>" class="card-link">
-                            <div class="card">
+                        <a href="<?php echo $link_loja; ?>" class="card-link" data-city="<?php echo htmlspecialchars($empreendimento['cidade']); ?>">
+                            <div class="card" data-city="<?php echo htmlspecialchars($empreendimento['cidade']); ?>">
                                 <div class="card-image">
                                     <img src="<?php echo $foto_src; ?>" alt="<?php echo htmlspecialchars($empreendimento['nome']); ?>">
                                 </div>
@@ -185,6 +185,35 @@ $empreendimentos = $empreendimentoController->getAllEmpreendimentos();
     new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
     <script src="../templates/assets/js/menu_profissional.js"></script>
+
+    <style>
+    /* preserve card styling: hide only the outer link wrapper when filtered */
+    .card-link.filtered-out { display: none !important; }
+    </style>
+    <script>
+    // Filtro por cidade (cliente_pag_principal.php) — toggle class on .card-link to avoid touching inner card styles
+    (function(){
+        const searchInput = document.querySelector('.search-section .search-input');
+        const cardsGrid = document.querySelector('.cards-grid');
+        if(!searchInput || !cardsGrid) return;
+        searchInput.addEventListener('input', function(){
+            const q = this.value.trim().toLowerCase();
+            const links = cardsGrid.querySelectorAll('.card-link');
+            let anyVisible = false;
+            links.forEach(link => {
+                const city = (link.dataset.city || link.querySelector('.card')?.dataset.city || '').toLowerCase();
+                const match = !q || city.indexOf(q) !== -1;
+                if(match){
+                    link.classList.remove('filtered-out');
+                    anyVisible = true;
+                } else {
+                    link.classList.add('filtered-out');
+                }
+            });
+            // optional: show no-results (not implemented)
+        });
+    })();
+    </script>
 
      <!-- Api Vlibras -->
     <div vw class="enabled">

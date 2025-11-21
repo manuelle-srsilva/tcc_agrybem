@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -19,7 +20,7 @@
                 <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
             </div>
             <nav class="nav">
-                <a href="carrinho.html" class="nav-button">Voltar ao carrinho</a>
+                <a href="carrinho.php" class="nav-button">Voltar ao carrinho</a>
             </nav>
         </div>
     </header>
@@ -27,6 +28,14 @@
     <!-- Conteúdo do Checkout -->
     <main class="checkout-page-content">
         <div class="container">
+            <?php if(isset($_GET['success']) && $_GET['success']=='1'){
+                $orders = isset($_GET['orders']) ? htmlspecialchars($_GET['orders']) : '';
+                header('Location: loja.php?order_confirmed=1&orders=' . urlencode($orders));
+                exit();
+            } elseif(isset($_GET['success']) && $_GET['success']=='0'){
+                echo '<div class="checkout-error">Erro ao criar pedido. Tente novamente.</div>';
+            }
+            ?>
             <h1 class="checkout-title">Finalizar Pedido</h1>
 
             <div class="checkout-grid">
@@ -37,82 +46,61 @@
                         <h2 class="card-title">Seu Pedido</h2>
                     </div>
                     <div id="order-items-container" class="order-items-scrollable">
-                        
-                        <!-- Item 1: Banana Prata -->
-                        <div class="order-item-detail">
-                            <div class="item-info-group">
-                                <img src="img/banana.png" alt="Banana Prata" class="order-item-image">
-                                <div class="item-text-details">
-                                    <span class="item-name">Banana Prata</span>
-                                    <span class="item-category">Frutas</span>
-                                    <span class="item-base-price">Preço base: R$ 5,99 / kg</span>
-                                </div>
-                            </div>
-                            <div class="item-quantity-price-group">
-                                <span class="item-quantity">1.5 kg</span>
-                                <span class="item-total-price">R$ 8,99</span>
-                            </div>
-                        </div>
-
-                        <!-- Item 2: Tomate Cereja -->
-                        <div class="order-item-detail">
-                            <div class="item-info-group">
-                                <img src="https://via.placeholder.com/80x80?text=Tomate" alt="Tomate Cereja" class="order-item-image">
-                                <div class="item-text-details">
-                                    <span class="item-name">Tomate Cereja</span>
-                                    <span class="item-category">Legumes</span>
-                                    <span class="item-base-price">Preço base: R$ 3,50 / un</span>
-                                </div>
-                            </div>
-                            <div class="item-quantity-price-group">
-                                <span class="item-quantity">3 un</span>
-                                <span class="item-total-price">R$ 10,50</span>
-                            </div>
-                        </div>
-
-                        <!-- Item 3: Alface Crespa -->
-                        <div class="order-item-detail">
-                            <div class="item-info-group">
-                                <img src="https://via.placeholder.com/80x80?text=Alface" alt="Alface Crespa" class="order-item-image">
-                                <div class="item-text-details">
-                                    <span class="item-name">Alface Crespa</span>
-                                    <span class="item-category">Folhagens</span>
-                                    <span class="item-base-price">Preço base: R$ 2,00 / un</span>
-                                </div>
-                            </div>
-                            <div class="item-quantity-price-group">
-                                <span class="item-quantity">1 un</span>
-                                <span class="item-total-price">R$ 2,00</span>
-                            </div>
-                        </div>
-
-                        <!-- FIM DOS ITENS -->
+                        <?php
+                        $cart = $_SESSION['cart'] ?? [];
+                        $grandTotal = 0.0;
+                        if(empty($cart)){
+                            echo '<p>Seu carrinho está vazio.</p>';
+                        } else {
+                            foreach($cart as $pid => $it){
+                                $name = htmlspecialchars($it['name'] ?? '');
+                                $category = htmlspecialchars($it['category'] ?? '');
+                                $unitPrice = floatval($it['price'] ?? 0);
+                                $unit = htmlspecialchars($it['selected_unit'] ?? ($it['measure']==='kg'?'kg':'un'));
+                                $qty = floatval($it['quantity'] ?? 0);
+                                $img = htmlspecialchars($it['image'] ?? '');
+                                $itemTotal = ($unit === 'g') ? $unitPrice * ($qty/1000) : $unitPrice * $qty;
+                                $grandTotal += $itemTotal;
+                                $unitLabel = ($unit === 'kg' || $unit === 'g') ? $unit : 'un';
+                                echo '<div class="order-item-detail">';
+                                echo '<div class="item-info-group">';
+                                echo '<img src="' . $img . '" alt="' . $name . '" class="order-item-image">';
+                                echo '<div class="item-text-details">';
+                                echo '<span class="item-name">' . $name . '</span>';
+                                echo '<span class="item-category">' . $category . '</span>';
+                                echo '<span class="item-base-price">Preço base: R$ ' . number_format($unitPrice,2,',','.') . ' / ' . $unitLabel . '</span>';
+                                echo '</div></div>';
+                                echo '<div class="item-quantity-price-group">';
+                                echo '<span class="item-quantity">' . $qty . ' ' . $unitLabel . '</span>';
+                                echo '<span class="item-total-price">R$ ' . number_format($itemTotal,2,',','.') . '</span>';
+                                echo '</div></div>';
+                            }
+                        }
+                        ?>
                     </div>
                     <div class="summary-total-line">
                         <span class="summary-total-label">Total Geral:</span>
-                        <span class="summary-total-value" id="checkout-grand-total">R$ 21,49</span>
+                        <span class="summary-total-value" id="checkout-grand-total">R$ <?php echo number_format($grandTotal,2,',','.'); ?></span>
                     </div>
                 </div>
 
                 <!-- Card 2: Agendamento de Retirada (Mantido como estava) -->
                 <div class="checkout-card schedule-card">
                     <h2 class="card-title">Agendamento de Retirada</h2>
-                    <form id="schedule-form">
+                    <form id="schedule-form" method="post" action="../Controller/OrderController.php">
                         <div class="form-group">
                             <label for="pickup-date">Data de Retirada:</label>
-                            <input type="date" id="pickup-date" name="pickup-date" required>
+                            <input type="date" id="pickup-date" name="pickup_date" required>
                         </div>
                         <div class="form-group">
                             <label for="pickup-time">Hora de Retirada:</label>
-                            <input type="time" id="pickup-time" name="pickup-time" required>
+                            <input type="time" id="pickup-time" name="pickup_time" required>
                         </div>
-
-                        <button type="submit" formaction="../View/loja.php" class="confirm-order-btn">
-                       Confirmar Pedido
+                        <button type="submit" name="action" value="place" class="confirm-order-btn">
+                            Confirmar Pedido
                         </button>
 
                   
-    
                     </form>
                 </div>
             </div>

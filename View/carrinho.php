@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -29,83 +30,57 @@
 
             <!-- Container de Itens do Carrinho -->
             <div id="cart-items-container">
-                <!-- ITENS DO CARRINHO ESTÁTICOS PARA FUTURA INTEGRAÇÃO COM PHP -->
-                
-                <!-- Item 1: Banana Prata (por kg) -->
-                <div class="cart-item" data-product-id="1">
-                    <img src="../templates/assets/img/banana.png" alt="Banana Prata" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <span class="cart-item-name">Banana Prata</span>
-                        <span class="cart-item-category">Frutas</span>
-                        <span class="cart-item-base-price">Preço base: R$ 5,99 / kg</span>
-                    </div>
-                    <div class="cart-item-controls">
-                        <div class="quantity-unit-group">
-                            <!-- Input de quantidade reativado -->
-                            <input type="number" value="1.5" min="0.1" step="0.1">
-                            <!-- Select de unidade reativado com opções kg/g -->
-                            <select>
-                                <option value="kg" selected>kg</option>
-                                <option value="g">g</option>
-                            </select>
-                        </div>
-                        <span class="item-total-price">R$ 8,99                        <!-- O botão de remover deve ser estático -->
-                        <button class="remove-item-btn">Remover</button>           </div>
-                </div>
-
-                <!-- Item 2: Tomate Cereja (por unidade) -->
-                <div class="cart-item" data-product-id="2">
-                    <img src="https://via.placeholder.com/80x80?text=Tomate" alt="Tomate Cereja" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <span class="cart-item-name">Tomate Cereja</span>
-                        <span class="cart-item-category">Legumes</span>
-                        <span class="cart-item-base-price">Preço base: R$ 3,50 / un</span>
-                    </div>
-                    <div class="cart-item-controls">
-                        <div class="quantity-unit-group">
-                            <!-- Input de quantidade reativado -->
-                            <input type="number" value="3" min="1" step="1">
-                            <!-- Select de unidade reativado com opção un -->
-                            <select>
-                                <option value="un" selected>un</option>
-                            </select>
-                        </div>
-                        <span class="item-total-price">R$ 10,50</span>
-                        <button class="remove-item-btn" disabled>Remover</button>
-                    </div>
-                </div>
-
-                <!-- Item 3: Alface Crespa (por unidade) -->
-                <div class="cart-item" data-product-id="3">
-                    <img src="https://via.placeholder.com/80x80?text=Alface" alt="Alface Crespa" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <span class="cart-item-name">Alface Crespa</span>
-                        <span class="cart-item-category">Folhagens</span>
-                        <span class="cart-item-base-price">Preço base: R$ 2,00 / un</span>
-                    </div>
-                    <div class="cart-item-controls">
-                        <div class="quantity-unit-group">
-                            <!-- Input de quantidade reativado -->
-                            <input type="number" value="1" min="1" step="1">
-                            <!-- Select de unidade reativado com opção un -->
-                            <select>
-                                <option value="un" selected>un</option>
-                            </select>
-                        </div>
-                        <span class="item-total-price">R$ 2,00</span>
-                        <button class="remove-item-btn" disabled>Remover</button>
-                    </div>
-                </div>
-                
-                <!-- FIM DOS ITENS DO CARRINHO ESTÁTICOS -->
+                <?php
+                $cart = $_SESSION['cart'] ?? [];
+                if (empty($cart)) {
+                    echo '<p>Seu carrinho está vazio.</p>';
+                } else {
+                    foreach ($cart as $pid => $item) {
+                        $mapped = htmlspecialchars($item['mapped_id'] ?? $pid);
+                        $name = htmlspecialchars($item['name'] ?? '');
+                        $category = htmlspecialchars($item['category'] ?? '');
+                        $price = number_format(floatval($item['price'] ?? 0), 2, ',', '.');
+                        $image = htmlspecialchars($item['image'] ?? '');
+                        $measure = htmlspecialchars($item['measure'] ?? 'un');
+                        $quantity = $item['quantity'] ?? 1;
+                        $dataUnitPrice = htmlspecialchars($item['price'] ?? 0);
+                        echo "<div class=\"cart-item\" data-product-id=\"{$mapped}\" data-original-product-id=\"{$pid}\" data-unit-price=\"{$dataUnitPrice}\" data-measure=\"{$measure}\">";
+                        echo "<img src=\"{$image}\" alt=\"{$name}\" class=\"cart-item-image\">";
+                        echo "<div class=\"cart-item-details\">";
+                        echo "<span class=\"cart-item-name\">{$name}</span>";
+                        echo "<span class=\"cart-item-category\">{$category}</span>";
+                        echo "<span class=\"cart-item-base-price\">Preço base: R$ {$price}</span>";
+                        echo "</div>";
+                        echo "<div class=\"cart-item-controls\">";
+                        echo "<div class=\"quantity-unit-group\">";
+                        $selectedUnit = htmlspecialchars($item['selected_unit'] ?? ($measure === 'kg' ? 'kg' : 'un'));
+                        if ($measure === 'kg') {
+                            echo "<input type=\"number\" min=\"0.1\" step=\"0.1\" value=\"{$quantity}\">";
+                            echo "<select>";
+                            echo "<option value=\"kg\"" . ($selectedUnit === 'kg' ? ' selected' : '') . ">kg</option>";
+                            echo "<option value=\"g\"" . ($selectedUnit === 'g' ? ' selected' : '') . ">g</option>";
+                            echo "</select>";
+                        } else {
+                            echo "<input type=\"number\" min=\"1\" step=\"1\" value=\"{$quantity}\">";
+                            echo "<select>";
+                            echo "<option value=\"un\"" . ($selectedUnit === 'un' ? ' selected' : '') . ">un</option>";
+                            echo "</select>";
+                        }
+                        echo "</div>";
+                        echo "<span class=\"item-total-price\">R$ 0,00</span>";
+                        echo "<button class=\"remove-item-btn\">Remover</button>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                }
+                ?>
             </div>
 
             <!-- Resumo do Carrinho -->
             <div class="cart-summary">
                 <div class="summary-details">
                     <span class="summary-total-label">Total Geral:</span>
-                    <!-- Total calculado manualmente para os itens de exemplo: 8,99 + 10,50 + 2,00 = 21,49 -->
-                    <span class="summary-total-value" id="grand-total">R$ 21,49</span>
+                    <span class="summary-total-value" id="grand-total">R$total_preco(soma dos preços)</span>
                 </div>
                 <!-- O botão de finalizar pedido agora é um link para simular a navegação -->
                 <a href="../View/checkout.php" class="checkout-btn" id="checkout-btn">Finalizar Pedido</a>
@@ -119,9 +94,125 @@
         <div class="vw-plugin-top-wrapper"></div>
     </div>
     </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
+    (function(){
+        async function post(data){
+            const res = await fetch('../Controller/CartController.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            return res.json();
+        }
+
+        function formatPrice(v){ return 'R$ ' + Number(v).toFixed(2).replace('.',','); }
+
+        async function updateQuantity(originalId, qty, unit){
+            // send update to server, but don't reload; update DOM on success
+            try{
+                const payload = { action: 'update', product_id: originalId, quantity: qty };
+                if(typeof unit !== 'undefined' && unit !== null) payload.unit = unit;
+                const res = await post(payload);
+                return res;
+            }catch(e){ console.error(e); return null; }
+        }
+
+        async function removeItem(originalId){
+            try{
+                const res = await post({ action: 'remove', product_id: originalId });
+                return res;
+            }catch(e){ console.error(e); return null; }
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            // Atualiza preços iniciais
+            document.querySelectorAll('.cart-item').forEach(div=>{
+                const unitPrice = parseFloat(div.dataset.unitPrice || '0') || 0;
+                const measure = div.dataset.measure || 'un';
+                const input = div.querySelector('input[type=number]');
+                const select = div.querySelector('select');
+                const totalSpan = div.querySelector('.item-total-price');
+                const orig = div.dataset.originalProductId;
+                function compute(){
+                    let qty = Number(input.value) || 0;
+                    const unit = select.value;
+                    let total = 0;
+                    if(measure === 'kg'){
+                        total = (unit === 'g') ? unitPrice * (qty/1000) : unitPrice * qty;
+                    } else {
+                        total = unitPrice * qty;
+                    }
+                    // update item total display and store total in data-price
+                    totalSpan.textContent = formatPrice(total);
+                    div.dataset.price = String(total);
+                }
+
+                compute();
+
+                // Use input event with debounce for better UX (updates immediately, syncs after pause)
+                let debounceTimer = null;
+                input.addEventListener('input', function(){
+                    let qty = Number(this.value) || 0;
+                    if(measure === 'kg' && qty < 0.1) qty = 0.1;
+                    if(measure !== 'kg' && qty < 1) qty = 1;
+                    this.value = qty;
+                    // immediate UI update
+                    compute();
+                    updateGrandTotal();
+                    // debounce server update
+                    if(debounceTimer) clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(async ()=>{
+                        const res = await updateQuantity(orig, input.value, select.value);
+                        // optional: handle server error
+                        if(!(res && res.success)){
+                            console.error('Failed to update quantity on server', res);
+                        }
+                    }, 600);
+                });
+
+                select.addEventListener('change', async function(){
+                    // update UI immediately
+                    compute();
+                    updateGrandTotal();
+                    // persist selected unit to server
+                    const res = await updateQuantity(orig, input.value, select.value);
+                    if(!(res && res.success)){
+                        console.error('Failed to persist unit selection', res);
+                    }
+                });
+
+                const removeBtn = div.querySelector('.remove-item-btn');
+                if(removeBtn){
+                    removeBtn.addEventListener('click', async function(){
+                        const res = await removeItem(orig);
+                        if(res && res.success){
+                            div.remove();
+                            // if no items left, show empty message
+                            const any = document.querySelectorAll('.cart-item').length;
+                            if(!any) document.getElementById('cart-items-container').innerHTML = '<p>Seu carrinho está vazio.</p>';
+                            updateGrandTotal();
+                        }
+                    });
+                }
+            });
+            // compute grand total initially
+            updateGrandTotal();
+        });
+
+        function updateGrandTotal(){
+            let grand = 0;
+            document.querySelectorAll('.cart-item').forEach(div => {
+                const price = parseFloat(div.dataset.price || '0') || 0;
+                grand += price;
+            });
+            const grandEl = document.getElementById('grand-total');
+            if(grandEl) grandEl.textContent = formatPrice(grand);
+        }
+    })();
     </script>
+            <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+            <script>
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+            </script>
 </body>
 </html>

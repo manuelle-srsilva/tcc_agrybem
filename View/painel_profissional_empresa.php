@@ -12,8 +12,8 @@ $empreendimentoController = new EmpreendimentoController();
 
 $id = $_SESSION['id_empreendimento'] ?? null;
 if (!$id) {
-    header("HTTP/1.0 404 Not Found");
-    exit('ID não encontrado');
+    header("Location: login_empresa.php");
+    exit('');
 }
 
 $result = $empreendimentoController->getEmpreendimentoFoto($id);

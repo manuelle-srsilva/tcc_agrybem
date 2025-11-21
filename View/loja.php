@@ -4,6 +4,7 @@ require_once '../vendor/autoload.php';
 
 use Controller\EmpreendimentoController;
 use Controller\EnderecoController;
+use Controller\ProdutoController;
 
 $empreendimento_id = $_GET['id'] ?? null;
 
@@ -15,10 +16,12 @@ if (!$empreendimento_id) {
 
 $empreendimentoController = new EmpreendimentoController();
 $enderecoController = new EnderecoController();
+$produtoController = new ProdutoController();
 
 // Busca as informações do empreendimento
 $empreendimentoInfo = $empreendimentoController->getempreendimentoInfo($empreendimento_id);
 $empreendimentoFoto = $empreendimentoController->getEmpreendimentoFoto($empreendimento_id);
+$produtos = $produtoController->getProdutosByEmpreendimento($empreendimento_id);
 
 // Busca as informações do endereço do empreendimento
 $enderecoInfo = null;
@@ -64,6 +67,13 @@ $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../templates/assets/css/loja.css">
     <script src="js/carrinho.js" defer></script>
+    <style>
+    /* Toast simples para confirmação de adição ao carrinho */
+    .ag-toast{position:fixed;right:20px;bottom:20px;background:#323232;color:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.2);opacity:0;transform:translateY(12px);transition:opacity .25s ease,transform .25s ease;z-index:9999;font-family:inherit}
+    .ag-toast.show{opacity:1;transform:translateY(0)}
+    /* Product filter: hide by toggling class to preserve product-card styles */
+    .product-card.filtered-out { display: none !important; }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -222,6 +232,7 @@ $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=
                             <input type="text" id="reference" value="<?php echo htmlspecialchars($enderecoInfo['complemento']); ?>" disabled>
                         </div>
                     </form>
+
                 </div>
             </div>
         </section>
@@ -257,9 +268,6 @@ $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=
                 </div>
             </div>
         </section>
-    <div class="informacao-secao">
-         <p>Clique no card para saber preço e categoria</p> 
-    </div>
       
      <!-- Seção de Produtos em Destaque -->
     <section class="featured-products">
@@ -267,128 +275,132 @@ $mapUrl = "https://www.google.com/maps/embed/v1/place?key={$googleMapsApiKey}&q=
           
 
             <div class="product-cards-container">
-                <!-- Card de Produto 1 -->
-                <div class="product-card" data-product-id="1" data-product-name="Banana" data-product-category="Fruta" data-product-price="17.50" data-product-image="img/Post instagram dia do feirante moderno verde (21) 1.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/Post instagram dia do feirante moderno verde (21) 1.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
+                    <?php if (!empty($produtos)): ?>
+                        <?php foreach ($produtos as $produto): ?>
 
-                        <h3 class="product-name">Maçã</h3>
-                     <h3 class="product-description">Fruta</br>17,50 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="1">+</button>
-                </div>
+                            <?php
+                                $foto_base64 = base64_encode($produto['foto']);
+                                $foto_src = 'data:image/jpeg;base64,' . $foto_base64;
+                                $preco_formatado = number_format($produto['preco'], 2, ',', '.');
+                            ?>
 
-                <!-- Card de Produto 2 -->
-                <div class="product-card" data-product-id="2" data-product-name="Tomate" data-product-category="Legume" data-product-price="6.00" data-product-image="img/tomate.png">
-                    <div class="product-image-placeholder">
-                                             <img src="../templates/assets/img/Post instagram dia do feirante moderno verde (23) 1.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
+                            <div class="product-card"
+                                data-product-id="<?php echo $produto['id']; ?>"
+                                data-product-name="<?php echo htmlspecialchars($produto['nome']); ?>"
+                                data-product-category="<?php echo htmlspecialchars($produto['categoria']); ?>"
+                                data-product-price="<?php echo $produto['preco']; ?>"
+                                data-product-image="<?php echo $foto_src; ?>"
+                                data-product-measure="<?php echo htmlspecialchars($produto['medida']); ?>">
 
-                        <h3 class="product-name">Abacaxi</h3>
-                     <h3 class="product-description">Fruta</br>R$ 6,00 kg</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="2">+</button>
-                </div>
+                                <div class="product-image-placeholder">
+                                    <img src="<?php echo $foto_src; ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
+                                </div>
 
-                <!-- Card de Produto 3 -->
-                <div class="product-card" data-product-id="3" data-product-name="Alface" data-product-category="Verdura" data-product-price="3.50" data-product-image="img/alface.png">
-                    <div class="product-image-placeholder">
-                                             <img src="../templates/assets/img/alface.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
+                                <div class="product-info-overlay">
+                                    <h3 class="product-name"><?php echo htmlspecialchars($produto['nome']); ?></h3>
+                                    <h3 class="product-description">
+                                        <?php echo htmlspecialchars($produto['categoria']); ?><br>
+                                        R$ <?php echo $preco_formatado; ?>
+                                    </h3>
+                                </div>
 
-                        <h3 class="product-name">Alface</h3>
-                     <h3 class="product-description">Verdura</br>3,50 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="3">+</button>
-                </div>
+                                <button class="add-to-cart-btn" data-product-id="<?php echo $produto['id']; ?>">+</button>
+                            </div>
 
-                <!-- Card de Produto 4 -->
-                <div class="product-card" data-product-id="4" data-product-name="Batata" data-product-category="Raiz" data-product-price="4.20" data-product-image="img/batata.png">
-                    <div class="product-image-placeholder">
-                                             <img src="../templates/assets/img/batata.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Batata</h3>
-                     <h3 class="product-description">Raiz</br>4,20 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="4">+</button>
-                </div>
-                 <!-- Card de Produto 4 -->
-                <div class="product-card" data-product-id="4" data-product-name="Batata" data-product-category="Raiz" data-product-price="4.20" data-product-image="img/batata.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/batata.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Batata</h3>
-                     <h3 class="product-description">Raiz</br>4,20 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="4">+</button>
-                </div>
-
-                 <!-- Card de Produto 4 -->
-                <div class="product-card" data-product-id="4" data-product-name="Batata" data-product-category="Raiz" data-product-price="4.20" data-product-image="img/batata.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/batata.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Batata</h3>
-                     <h3 class="product-description">Raiz</br>4,20 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="4">+</button>
-                </div>
-                 <!-- Card de Produto 4 -->
-                <div class="product-card" data-product-id="4" data-product-name="Batata" data-product-category="Raiz" data-product-price="4.20" data-product-image="img/batata.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/batata.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Batata</h3>
-                     <h3 class="product-description">Raiz</br>4,20 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="4">+</button>
-                </div>
-
-                <!-- Card de Produto 5 -->
-                <div class="product-card" data-product-id="5" data-product-name="Maçã" data-product-category="Fruta" data-product-price="9.90" data-product-image="img/maca.png">
-                    <div class="product-image-placeholder">
-                                             <img src="img/maca.png" alt="">
-                    </div>
-                    <div class="product-info-overlay">
-
-                        <h3 class="product-name">Maçã</h3>
-                     <h3 class="product-description">Fruta</br>9,90 R$</h3>
-                        
-                    </div>
-                    <button class="add-to-cart-btn" data-product-id="5">+</button>
-                </div>
-
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Nenhum produto encontrado.</p>
+                    <?php endif; ?>
             </div>
         </div>
     </section>
     
-
- <!-- Api Vlibras -->
+    
     <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
         <div class="vw-plugin-top-wrapper"></div>
     </div>
     </div>
+    <script>
+    (function(){
+        async function post(data){
+            const res = await fetch('../Controller/CartController.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            return res.json();
+        }
+
+        async function updateCartCount(){
+            try{
+                const r = await post({ action: 'count' });
+                const countEl = document.getElementById('cart-count-profile');
+                if(countEl) countEl.textContent = r.count || 0;
+            }catch(e){ console.error(e); }
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            updateCartCount();
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn=>{
+                btn.addEventListener('click', async function(e){
+                    e.preventDefault();
+                    const card = btn.closest('.product-card');
+                    if(!card) return;
+                    const originalId = card.dataset.productId;
+                    const name = card.dataset.productName || '';
+                    const category = card.dataset.productCategory || '';
+                    const price = parseFloat(card.dataset.productPrice) || 0;
+                    const image = card.dataset.productImage || '';
+                    const measure = (card.dataset.productMeasure || 'un').toLowerCase();
+                    const mappedId = (measure === 'kg') ? '1' : (measure === 'un') ? '2' : originalId;
+
+                    try{
+                        const res = await post({ action: 'add', product_id: originalId, mapped_id: mappedId, name, category, price, image, measure });
+                        if(res.success){ 
+                            updateCartCount();
+                            showToast('Produto adicionado: ' + name);
+                            btn.classList.add('added-to-cart');
+                            setTimeout(()=> btn.classList.remove('added-to-cart'), 600);
+                        } else {
+                            showToast('Erro ao adicionar o produto');
+                        }
+                    }catch(err){ console.error(err); showToast('Erro ao adicionar o produto'); }
+                });
+            });
+            // add product search filter (by product name or category)
+            const searchInput = document.querySelector('.search-section .search-input');
+            const productGrid = document.querySelector('.product-cards-container');
+            if(searchInput && productGrid){
+                searchInput.addEventListener('input', function(){
+                    const q = this.value.trim().toLowerCase();
+                    const cards = productGrid.querySelectorAll('.product-card');
+                    cards.forEach(card => {
+                        const name = (card.dataset.productName || '').toLowerCase();
+                        const cat = (card.dataset.productCategory || '').toLowerCase();
+                        const match = !q || name.indexOf(q) !== -1 || cat.indexOf(q) !== -1;
+                        if(match) card.classList.remove('filtered-out'); else card.classList.add('filtered-out');
+                    });
+                });
+            }
+        });
+
+        window.agCart = { updateCartCount };
+    })();
+    
+    // Toast helper (fora do IIFE para possível uso global)
+    function showToast(message, ms = 2500){
+        let el = document.getElementById('ag-toast');
+        if(!el){ el = document.createElement('div'); el.id = 'ag-toast'; el.className = 'ag-toast'; document.body.appendChild(el); }
+        el.textContent = message;
+        // force reflow then show
+        void el.offsetWidth;
+        el.classList.add('show');
+        clearTimeout(el._hideTimeout);
+        el._hideTimeout = setTimeout(()=>{ el.classList.remove('show'); }, ms);
+    }
+    </script>
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');

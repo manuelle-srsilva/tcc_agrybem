@@ -103,7 +103,7 @@ class Instituicao {
 
     public function getInstituicaoInfo ($id) {
         try {
-            $sql = "SELECT nome, email, senha, cnpj, link_whatsapp, descricao FROM instituicao WHERE id = :id";
+            $sql = "SELECT nome, email, senha, cnpj, link_whatsapp, descricao, id_endereco FROM instituicao WHERE id = :id";
 
             $stmt = $this->db->prepare($sql);
 

@@ -10,8 +10,8 @@ $instituicaoController = new InstituicaoController();
 
 $id = $_SESSION['id_instituicao'] ?? null;
 if (!$id) {
-    header("HTTP/1.0 404 Not Found");
-    exit('ID não encontrado');
+    header("Location: instituicao_login.php");
+    exit();
 }
 
 $result = $instituicaoController->getInstituicaoFoto($id);
@@ -74,7 +74,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
                         </a>
                          <a href="../View/daocao_intituicao.php" class="menu-item">
                             <img src="../templates/assets/img/loja empresa.png" alt="Sair" class="menu-item-icon">
-                            <span>instituição</span>
+                            <span>Minha instituição</span>
                         </a>
     
         
@@ -166,7 +166,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
    <!-- Seção de Pesquisa -->
         <section class="search-section">
             
-            <h2 class="search-title">Descubra instituições perto de você.</h2>
+            <h2 class="search-title">Descubra instituições perto de você</h2>
             <div class="search-container">
                 <div class="search-input-wrapper">
                     <input type="text" class="search-input" placeholder="Pesquisar...">
