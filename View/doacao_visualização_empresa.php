@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../templates/assets/css/doacao_pag_principal.css">
+    <link rel="stylesheet" href="../templates/assets/css/doacao_pag_principal1.css">
 </head>
 <body>
    <!-- Header -->
@@ -18,12 +18,13 @@
                 <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
             </div>
              <nav class="nav">  
-                <a href="../View/painel_profissional_empresa.php" class="nav-button">Voltar</a>
+                <a href="../View/cliente_pag_principal.php" class="nav-button">Voltar</a>
             </nav>
           
         </div>
     </header>
 
+   
     <!-- Hero Section -->
     <section class="hero">
         <img src="../templates/assets/img/principal.doação.png" alt="Imagem de fundo da seção hero" class="hero-img">
@@ -115,22 +116,27 @@
 
     <!-- Grade de Cartões -->
     <section class="cards-section">
-        <div class="cards-grid">
-            <!-- Cartão 1 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="../templates/assets/img/instituição 1.png" alt="Crédito Rural">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Ação Cidadã Brasil</h3>
-                    <p class="card-category">Camaçari (Centro)</p>
-                </div>
-            </div>
+       <div class="cards-grid">
+           <a href="../View/instituicao_vitrine_empresa.php" class="card-link">
+    <!-- Cartão 1 -->
+    <div class="card">
+        <div class="card-image">
+            <img src="../templates/assets/img/instituição 1.png" alt="Crédito Rural">
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Ação Cidadã Brasil</h3>
+            <p class="card-category">Camaçari (Centro)</p>
+        </div>
+    </div>
+</a>
+
+
+            
 
             <!-- Cartão 2 -->
             <div class="card">
                 <div class="card-image">
-                    <img src="img/instituição 2.png" alt="Sementes">
+                    <img src="../templates/assets/img/instituição 2.png" alt="Sementes">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">Comunidade fé e verdade</h3>
@@ -141,7 +147,7 @@
             <!-- Cartão 3 -->
             <div class="card">
                 <div class="card-image">
-                    <img src="img/instituição 3.png" alt="Maquinário">
+                    <img src="../templates/assets/img/instituição 3.png" alt="Maquinário">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">Maquinário Agrícola</h3>
@@ -152,7 +158,7 @@
             <!-- Cartão 4 -->
             <div class="card">
                 <div class="card-image">
-                    <img src="img/instituição 4.png" alt="Fertilizantes">
+                    <img src="../templates/assets/img/instituição 4.png" alt="Fertilizantes">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">Fertilizantes Orgânicos</h3>
@@ -250,9 +256,7 @@
         </div>
     </section>
 
-    
-
-
+   
 
   <!-- Api Vlibras -->
     <div vw class="enabled">
@@ -265,7 +269,7 @@
     <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
-
-   <script src="/js/menu_profissional.js"></script>
+    
+   <script src="../templates/assets/js/menu_profissional.js"></script>
 </body>
 </html> 

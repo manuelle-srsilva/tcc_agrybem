@@ -49,7 +49,7 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../templates/assets/css/doacao_pag_principal.css">
+    <link rel="stylesheet" href="../templates/assets/css/doacao_pag_principal1.css">
 </head>
 <body>
    <!-- Header -->
@@ -179,17 +179,22 @@ $instituicaoNome = $instituicaoController->getInstituicaoName($id, $nome);
 
     <!-- Grade de Cartões -->
     <section class="cards-section">
-        <div class="cards-grid">
-            <!-- Cartão 1 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="../templates/assets/img/instituição 1.png" alt="Crédito Rural">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Ação Cidadã Brasil</h3>
-                    <p class="card-category">Camaçari (Centro)</p>
-                </div>
-            </div>
+       <div class="cards-grid">
+           <a href="../View/instituicao_vitrine.php" class="card-link">
+    <!-- Cartão 1 -->
+    <div class="card">
+        <div class="card-image">
+            <img src="../templates/assets/img/instituição 1.png" alt="Crédito Rural">
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Ação Cidadã Brasil</h3>
+            <p class="card-category">Camaçari (Centro)</p>
+        </div>
+    </div>
+</a>
+
+
+            
 
             <!-- Cartão 2 -->
             <div class="card">
