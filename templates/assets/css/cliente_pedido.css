@@ -101,6 +101,13 @@ body {
     border-bottom: 2px solid #e0e0e0;
 }
 
+/* Estilo para agrupar status e botão de cancelar */
+.status-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre o status e o botão */
+}
+
 .card-title {
     font-size: 20px;
     font-weight: 600;
@@ -128,6 +135,24 @@ body {
 .status-retirada {
     background-color: #ffc107; /* Amarelo */
     color: #333;
+}
+
+/* Estilo para o botão de cancelar */
+.cancel-order-btn {
+    background-color: #dc3545; /* Vermelho */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.cancel-order-btn:hover {
+    background-color: #c82333;
 }
 
 .card-meta {

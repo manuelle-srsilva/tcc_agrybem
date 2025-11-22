@@ -169,6 +169,42 @@ switch($action){
         if($ok) jsonOk(['order_id'=>$order_id,'status'=>$status]);
         jsonErr('failed to update');
 
+    case 'client_cancel':
+        // client requests to cancel their own order
+        $order_id = isset($input['order_id']) ? intval($input['order_id']) : 0;
+        if(!$order_id) jsonErr('missing order_id');
+        $order = $orderModel->getOrderById($order_id);
+        if(!$order) jsonErr('order not found');
+
+        // determine cliente id from session using similar keys as above
+        $cliente_id = null;
+        $possibleKeys = [
+            'cliente_id','id_cliente','id','clienteId','cliente','user','user_id','userId','id_usuario','user_id'
+        ];
+        foreach($possibleKeys as $k){
+            if(isset($_SESSION[$k])){
+                if(is_array($_SESSION[$k])){
+                    if(isset($_SESSION[$k]['id'])){ $cliente_id = $_SESSION[$k]['id']; break; }
+                    if(isset($_SESSION[$k]['cliente_id'])){ $cliente_id = $_SESSION[$k]['cliente_id']; break; }
+                } else {
+                    $cliente_id = $_SESSION[$k];
+                    break;
+                }
+            }
+        }
+
+        if(!$cliente_id || intval($order['cliente_id']) !== intval($cliente_id)){
+            jsonErr('not allowed');
+        }
+
+        // allow cancellation only from certain current statuses
+        $cancelable = ['pending','in_transit'];
+        if(!in_array($order['status'], $cancelable)) jsonErr('cannot_cancel');
+
+        $ok = $orderModel->updateStatus($order_id, 'canceled');
+        if($ok) jsonOk(['order_id'=>$order_id,'status'=>'canceled', 'message' => 'Pedido cancelado com sucesso.']);
+        jsonErr('failed to cancel');
+
     default:
         jsonErr('unknown action');
 }

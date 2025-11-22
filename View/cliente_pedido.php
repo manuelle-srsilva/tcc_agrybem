@@ -70,58 +70,79 @@
                 // group by pickup_date (or created_at if null)
                 $groups = [];
                 foreach($orders as $o){
+                    // Pula pedidos cancelados para não exibir
+                    if ($o['status'] === 'canceled') {
+                        continue;
+                    }
                     $date = $o['pickup_date'] ?: substr($o['created_at'],0,10);
                     $groups[$date][] = $o;
                 }
-                foreach($groups as $date => $group){
-                    echo '<div class="order-group">';
-                    echo '<h2 class="group-title">📅 Pedidos para ' . date('d/m/Y', strtotime($date)) . '</h2>';
-                    foreach($group as $o){
-                        // Map DB status to client-friendly badge with classes
-                        $order_date_attr = date('Y-m-d', strtotime($o['pickup_date'] ?? $o['created_at']));
-                        $order_status_attr = htmlspecialchars($o['status']);
-                        echo '<div class="order-card compact" data-order-status="' . $order_status_attr . '" data-order-date="' . $order_date_attr . '">';
-                        echo '<div class="card-header">';
-                        echo '<h3 class="card-title">Pedido #' . htmlspecialchars($o['id']) . '</h3>';
-                        if($o['status'] === 'pending'){
-                            echo '<span class="card-status status-retirada">🟡 Enviado</span>';
-                        } elseif($o['status'] === 'finished' || $o['status'] === 'delivered'){
-                            echo '<span class="card-status status-enviado">🟢 Retirado</span>';
-                        } else {
-                            // fallback
-                            echo '<span class="card-status status-reitrada">🟡 ' . htmlspecialchars(ucfirst($o['status'])) . '</span>';
-                        }
-                        echo '</div>';
-                        echo '<div class="card-meta compact-meta">';
-                        echo '<span class="meta-item"><strong>Loja:</strong> ' . htmlspecialchars($o['empresa_nome'] ?? 'Loja') . '</span>';
-                        echo '<span class="meta-item"><strong>Data:</strong> ' . date('d/m/Y', strtotime($o['pickup_date'] ?? $o['created_at'])) . '</span>';
-                        echo '<span class="meta-item"><strong>Hora:</strong> ' . htmlspecialchars($o['pickup_time'] ?? '') . '</span>';
-                        echo '</div>';
-                        echo '<ul class="card-items-list compact-list">';
-                        echo '<li class="item-list-title">Itens Solicitados:</li>';
-                        foreach($o['items'] as $it){
-                            // get product name from Produto model
-                            $prodName = 'Produto #' . $it['produto_id'];
-                            try{
-                                $p = $produtoModel->getProdutoInfo($it['produto_id']);
-                                if(!empty($p) && !empty($p['nome'])) $prodName = $p['nome'];
-                            } catch(Exception $e){ }
+                
+                // Se não houver pedidos após filtrar os cancelados
+                if (empty($groups)) {
+                    echo '<p>Você ainda não tem pedidos.</p>';
+                } else {
+                    foreach($groups as $date => $group){
+                        echo '<div class="order-group">';
+                        echo '<h2 class="group-title">📅 Pedidos para ' . date('d/m/Y', strtotime($date)) . '</h2>';
+                        foreach($group as $o){
+                            // Map DB status to client-friendly badge with classes
+                            $order_date_attr = date('Y-m-d', strtotime($o['pickup_date'] ?? $o['created_at']));
+                            $order_status_attr = htmlspecialchars($o['status']);
+                            echo '<div class="order-card compact" data-order-id="' . intval($o['id']) . '" data-order-status="' . $order_status_attr . '" data-order-date="' . $order_date_attr . '">';
+                            echo '<div class="card-header">';
+                            echo '<h3 class="card-title">Pedido #' . htmlspecialchars($o['id']) . '</h3>';
+                            
+                            // NOVA DIV para agrupar status e botão de cancelar
+                            echo '<div class="status-actions" style="display: flex; align-items: center; gap: 10px;">';
+                            
+                            if($o['status'] === 'pending'){
+                                echo '<span class="card-status status-retirada">🟡 Enviado</span>';
+                            } elseif($o['status'] === 'finished' || $o['status'] === 'delivered'){
+                                echo '<span class="card-status status-enviado">🟢 Retirado</span>';
+                            } else {
+                                // fallback
+                                echo '<span class="card-status status-retirada">🟡 ' . htmlspecialchars(ucfirst($o['status'])) . '</span>';
+                            }
+                            // show cancel button for cancelable statuses (pending, in_transit)
+                            if(in_array($o['status'], ['pending','in_transit'])){
+                                echo '<button class="cancel-order-btn" data-order-id="' . intval($o['id']) . '" title="Cancelar pedido" style="    background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.3s; white-space: nowrap;">Cancelar</button>';
+                            }
+                            
+                            echo '</div>'; // status-actions
+                            echo '</div>'; // card-header
+                            
+                            echo '<div class="card-meta compact-meta">';
+                            echo '<span class="meta-item"><strong>Loja:</strong> ' . htmlspecialchars($o['empresa_nome'] ?? 'Loja') . '</span>';
+                            echo '<span class="meta-item"><strong>Data:</strong> ' . date('d/m/Y', strtotime($o['pickup_date'] ?? $o['created_at'])) . '</span>';
+                            echo '<span class="meta-item"><strong>Hora:</strong> ' . htmlspecialchars($o['pickup_time'] ?? '') . '</span>';
+                            echo '</div>';
+                            echo '<ul class="card-items-list compact-list">';
+                            echo '<li class="item-list-title">Itens Solicitados:</li>';
+                            foreach($o['items'] as $it){
+                                // get product name from Produto model
+                                $prodName = 'Produto #' . $it['produto_id'];
+                                try{
+                                    $p = $produtoModel->getProdutoInfo($it['produto_id']);
+                                    if(!empty($p) && !empty($p['nome'])) $prodName = $p['nome'];
+                                } catch(Exception $e){ }
 
-                            // format quantity: kg/g -> 2 decimals max, un -> 0 decimals
-                            $unit = $it['unidade'] ?? '';
-                            $qty = $it['quantidade'] ?? 0;
-                            $dec = ($unit === 'un') ? 0 : 2;
-                            $qtyFormatted = number_format((float)$qty, $dec, ',', '');
+                                // format quantity: kg/g -> 2 decimals max, un -> 0 decimals
+                                $unit = $it['unidade'] ?? '';
+                                $qty = $it['quantidade'] ?? 0;
+                                $dec = ($unit === 'un') ? 0 : 2;
+                                $qtyFormatted = number_format((float)$qty, $dec, ',', '');
 
-                            echo '<li class="card-item">';
-                            echo '<span class="item-name">' . htmlspecialchars($prodName) . '</span>';
-                            echo '<span class="item-quantity">' . htmlspecialchars($qtyFormatted) . ' ' . htmlspecialchars($unit) . '</span>';
-                            echo '</li>';
+                                echo '<li class="card-item">';
+                                echo '<span class="item-name">' . htmlspecialchars($prodName) . '</span>';
+                                echo '<span class="item-quantity">' . htmlspecialchars($qtyFormatted) . ' ' . htmlspecialchars($unit) . '</span>';
+                                echo '</li>';
+                            }
+                            echo '</ul>';
+                            echo '</div>'; // order-card
                         }
-                        echo '</ul>';
-                        echo '</div>'; // order-card
+                        echo '</div>'; // group
                     }
-                    echo '</div>'; // group
                 }
             }
             ?>
@@ -198,5 +219,50 @@
     if(statusSelect) statusSelect.addEventListener('change', applyFilters);
     // initial apply
     applyFilters();
+})();
+</script>
+
+<script>
+// Cancel order handler
+(function(){
+    document.addEventListener('click', function(e){
+        const btn = e.target.closest('.cancel-order-btn');
+        if(!btn) return;
+        e.preventDefault();
+        const orderId = btn.dataset.orderId;
+        if(!orderId) return;
+        if(!confirm('Deseja cancelar este pedido?')) return;
+
+        fetch('../Controller/OrderController.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ action: 'client_cancel', order_id: parseInt(orderId,10) })
+        }).then(r=>r.json()).then(data=>{
+            if(data && data.success){
+                // **NOVA LÓGICA: Exibe mensagem de sucesso antes de remover**
+                alert('Pedido #' + orderId + ' cancelado com sucesso.');
+                
+                // remove card from DOM
+                const card = document.querySelector('.order-card[data-order-id="'+orderId+'"]');
+                if(card){
+                    const group = card.closest('.order-group');
+                    card.remove();
+                    // if no more cards in group, remove group
+                    if(group && group.querySelectorAll('.order-card').length === 0){
+                        group.remove();
+                    }
+                }
+            } else {
+                // **CORREÇÃO: Usa data.message para exibir o erro do servidor**
+                alert('Não foi possível cancelar o pedido: ' + (data.message || 'Erro desconhecido.'));
+            }
+        }).catch(err=>{
+            console.error(err);
+            alert('Erro na requisição. Tente novamente.');
+        });
+    });
 })();
 </script>
