@@ -41,45 +41,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Ação para o card "Informações da Empresa"
     if ($formType === 'empresa') {
-        $empreendedorController->updateEmpreendedor(
-            $_SESSION['id_empreendedor'],
-            $_POST['nome_empreendedor'],
-            $_POST['email'],
-            $_POST['cnpj_cpf']
-        );
-        // A função de update do empreendimento precisa de todos os campos.
-        // O campo 'descricao' não está neste formulário, então o passamos de um campo oculto.
-        $empreendimentoController->updateEmpreendimento(
-            $_SESSION['id_empreendimento'],
-            $_POST['nome_empreendimento'],
-            $_POST['telefone'],
-            $_POST['link_whatsapp'],
-            $_POST['descricao_hidden'], // <-- Usando o campo oculto
-            $_POST['hr_funcionamento']
-        );
+        // Sanitização e validação
+        $nome_empreendedor = htmlspecialchars(trim($_POST['nome_empreendedor'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $email = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL);
+        $cnpj_cpf = preg_replace('/\D/', '', $_POST['cnpj_cpf'] ?? '');
+
+        $nome_empreendimento = htmlspecialchars(trim($_POST['nome_empreendimento'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $telefone = htmlspecialchars(trim($_POST['telefone'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $link_whatsapp = filter_var(trim($_POST['link_whatsapp'] ?? ''), FILTER_SANITIZE_URL);
+        $descricao_hidden = htmlspecialchars(trim($_POST['descricao_hidden'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $hr_funcionamento = htmlspecialchars(trim($_POST['hr_funcionamento'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+        $errors = [];
+        if (!$nome_empreendedor) $errors[] = 'Nome do responsável inválido.';
+        if (!$email) $errors[] = 'E-mail inválido.';
+        if (!$cnpj_cpf) $errors[] = 'CNPJ/CPF inválido.';
+
+        if (empty($errors)) {
+            $empreendedorController->updateEmpreendedor(
+                $_SESSION['id_empreendedor'],
+                $nome_empreendedor,
+                $email,
+                $cnpj_cpf
+            );
+
+            $empreendimentoController->updateEmpreendimento(
+                $_SESSION['id_empreendimento'],
+                $nome_empreendimento,
+                $telefone,
+                $link_whatsapp,
+                $descricao_hidden,
+                $hr_funcionamento
+            );
+        } else {
+            $_SESSION['mensagem_perfil'] = implode(' ', $errors);
+        }
     }
 
     // Ação para o card "Descrição" (AGORA OTIMIZADO)
     if ($formType === 'description') {
-        // A lógica agora é idêntica à do outro card, usando campos ocultos.
-        // É mais simples, mais rápido e mais consistente.
-        $empreendimentoController->updateEmpreendimento(
-            $_SESSION['id_empreendimento'],
-            $_POST['nome_empreendimento_hidden'],
-            $_POST['telefone_hidden'],
-            $_POST['link_whatsapp_hidden'],
-            $_POST['descricao'], // O único campo visível e editado
-            $_POST['hr_funcionamento_hidden']
-        );
+        $descricao = htmlspecialchars(trim($_POST['descricao'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $nome_hidden = htmlspecialchars(trim($_POST['nome_empreendimento_hidden'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $telefone_hidden = htmlspecialchars(trim($_POST['telefone_hidden'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $link_whatsapp_hidden = filter_var(trim($_POST['link_whatsapp_hidden'] ?? ''), FILTER_SANITIZE_URL);
+        $hr_hidden = htmlspecialchars(trim($_POST['hr_funcionamento_hidden'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+        if ($descricao !== '') {
+            $empreendimentoController->updateEmpreendimento(
+                $_SESSION['id_empreendimento'],
+                $nome_hidden,
+                $telefone_hidden,
+                $link_whatsapp_hidden,
+                $descricao,
+                $hr_hidden
+            );
+        } else {
+            $_SESSION['mensagem_perfil'] = 'Descrição inválida.';
+        }
     }
 
     // Ação para o card "Endereço"
     if ($formType === 'address') {
-        $enderecoController->updateEndereco(
-            $_SESSION['id_endereco'],
-            $_POST['cep'], $_POST['rua'], $_POST['numero'], $_POST['bairro'],
-            $_POST['cidade'], $_POST['estado'], $_POST['complemento']
-        );
+        $cep = preg_replace('/\D/', '', $_POST['cep'] ?? '');
+        $rua = htmlspecialchars(trim($_POST['rua'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $numero = htmlspecialchars(trim($_POST['numero'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $bairro = htmlspecialchars(trim($_POST['bairro'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $cidade = htmlspecialchars(trim($_POST['cidade'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $estado = htmlspecialchars(trim($_POST['estado'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $complemento = htmlspecialchars(trim($_POST['complemento'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+        if ($cidade && $rua) {
+            $enderecoController->updateEndereco(
+                $_SESSION['id_endereco'],
+                $cep, $rua, $numero, $bairro,
+                $cidade, $estado, $complemento
+            );
+        } else {
+            $_SESSION['mensagem_perfil'] = 'Endereço incompleto.';
+        }
     }
 
     // Redireciona para a mesma página para mostrar os dados atualizados

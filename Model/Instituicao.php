@@ -119,6 +119,18 @@ class Instituicao {
         }
     }
 
+    public function getAllInstituicoes(){
+        try {
+            $sql = "SELECT i.id, i.nome, i.foto, e.cidade, e.bairro FROM instituicao i LEFT JOIN endereco e ON i.id_endereco = e.id ORDER BY i.nome ASC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $error){
+            echo "Erro ao buscar instituições: " . $error->getMessage();
+            return [];
+        }
+    }
+
     public function updateInstituicao ($id, $nome, $email, $cnpj, $link_whatsapp) {
         try {
             $sql = "UPDATE instituicao SET nome = :nome, email = :email, cnpj = :cnpj, link_whatsapp = :link_whatsapp WHERE id = :id";

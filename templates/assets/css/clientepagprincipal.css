@@ -437,11 +437,7 @@ html, body {
 
 .cards-grid {
     display: grid;
-    /* Colunas com largura fixa (220px). Usamos auto-fit para manter as
-       colunas com largura fixa e centralizamos o grid quando houver
-       menos itens — assim os cartões não esticam. */
-    grid-template-columns: repeat(auto-fit, 220px);
-    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
@@ -449,20 +445,16 @@ html, body {
 
 .card-link {
     text-decoration: none;
-    color: inherit;
-    display: block; /* garante que o link ocupe o espaço do cartão */
-    width: 220px; /* fixa largura do wrapper para evitar esticamento */
 }
 
 .card {
-    background-color: white;
-    border-radius: 15px;
+    background-color: #ffffff;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     cursor: pointer;
-    width: 100%; /* ocupa 100% do wrapper (.card-link) que está fixado */
-    max-width: 220px;
+    position: relative; /* Adicionado para posicionamento do ícone */
 }
 
 .card:hover {

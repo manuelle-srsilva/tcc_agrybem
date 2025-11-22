@@ -34,37 +34,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Ação para o card "Descrição"
     if ($formType === 'description') {
-        // Assumindo que você criou um método 'updateDescription' no controller.
-        $instituicaoController->updateInstituicaoDescricao(
-            $_SESSION['id_instituicao'],
-            $_POST['descricao']
-        );
+        $descricao = htmlspecialchars(trim($_POST['descricao'] ?? ''), ENT_QUOTES, 'UTF-8');
+        if ($descricao !== '') {
+            $instituicaoController->updateInstituicaoDescricao(
+                $_SESSION['id_instituicao'],
+                $descricao
+            );
+        } else {
+            $_SESSION['mensagem_instituicao'] = 'Descrição inválida.';
+        }
     }
 
     // Ação para o card "Informações da Instituição"
     if ($formType === 'institution') {
-        // Assumindo que você criou um método 'updateProfile' que não atualiza a senha.
-        $instituicaoController->updateInstituicao(
-            $_SESSION['id_instituicao'],
-            $_POST['nome'],
-            $_POST['email'],
-            $_POST['cnpj'],
-            $_POST['link_whatsapp']
-        );
+        $nome = htmlspecialchars(trim($_POST['nome'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $email = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL);
+        $cnpj = preg_replace('/\D/', '', $_POST['cnpj'] ?? '');
+        $link_whatsapp = filter_var(trim($_POST['link_whatsapp'] ?? ''), FILTER_SANITIZE_URL);
+
+        if ($nome && $email && $cnpj) {
+            $instituicaoController->updateInstituicao(
+                $_SESSION['id_instituicao'],
+                $nome,
+                $email,
+                $cnpj,
+                $link_whatsapp
+            );
+        } else {
+            $_SESSION['mensagem_instituicao'] = 'Dados inválidos.';
+        }
     }
 
     // Ação para o card "Endereço"
     if ($formType === 'address') {
-        $enderecoController->updateEndereco(
-            $_SESSION['id_endereco'],
-            $_POST['cep'],
-            $_POST['rua'],
-            $_POST['numero'],
-            $_POST['bairro'],
-            $_POST['cidade'],
-            $_POST['estado'],
-            $_POST['complemento']
-        );
+        $cep = preg_replace('/\D/', '', $_POST['cep'] ?? '');
+        $rua = htmlspecialchars(trim($_POST['rua'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $numero = htmlspecialchars(trim($_POST['numero'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $bairro = htmlspecialchars(trim($_POST['bairro'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $cidade = htmlspecialchars(trim($_POST['cidade'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $estado = htmlspecialchars(trim($_POST['estado'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $complemento = htmlspecialchars(trim($_POST['complemento'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+        if ($cidade && $rua) {
+            $enderecoController->updateEndereco(
+                $_SESSION['id_endereco'],
+                $cep,
+                $rua,
+                $numero,
+                $bairro,
+                $cidade,
+                $estado,
+                $complemento
+            );
+        } else {
+            $_SESSION['mensagem_instituicao'] = 'Endereço incompleto.';
+        }
     }
 
     header('Location: instituicao_perfil.php');

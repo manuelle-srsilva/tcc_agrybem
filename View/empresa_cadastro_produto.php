@@ -17,31 +17,37 @@ $id_empreendimento = $_SESSION['id_empreendimento'];
 $produtoController = new ProdutoController();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if(isset($_POST['nome'], $_POST['preco'], $_POST['unidadeMedida'], $_POST['categoria']) && isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-        
-        $nome = $_POST['nome'];
-        $preco = $_POST['preco'];
-        $medida = $_POST['unidadeMedida'];
-        $categoria = $_POST['categoria'];
-        
-        // Processa a foto
+    $nome_raw = $_POST['nome'] ?? '';
+    $preco_raw = $_POST['preco'] ?? '';
+    $medida_raw = $_POST['unidadeMedida'] ?? '';
+    $categoria_raw = $_POST['categoria'] ?? '';
+
+    $nome = htmlspecialchars(trim($nome_raw), ENT_QUOTES, 'UTF-8');
+    $preco = filter_var(str_replace(',', '.', trim($preco_raw)), FILTER_VALIDATE_FLOAT);
+    $medida = htmlspecialchars(trim($medida_raw), ENT_QUOTES, 'UTF-8');
+    $categoria = htmlspecialchars(trim($categoria_raw), ENT_QUOTES, 'UTF-8');
+
+    // validações básicas
+    if (!$nome || $preco === false || !$medida || !$categoria) {
+        $registerMessage = 'Por favor, preencha todos os campos corretamente.';
+    } elseif (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
+        $registerMessage = 'Por favor, selecione uma foto válida.';
+    } else {
         $tmpName = $_FILES['foto']['tmp_name'];
         $fotoBin = file_get_contents($tmpName);
 
-        // Remove o prefixo "R$" do preço, se existir, e substitui vírgula por ponto
-        $preco_limpo = str_replace(['R$', ' '], '', $preco);
-        $preco_float = (float) str_replace(',', '.', $preco_limpo);
-
-        if($produtoController->cadastroProduto($nome, $preco_float, $categoria, $medida, $fotoBin, $id_empreendimento)) {
-            // Sucesso! Redireciona para a página de produtos
-            header('Location: empresa_produto.php?status=success');
-            exit();
+        // unidade de medida aceita
+        $validMedidas = ['kg','un'];
+        if (!in_array($medida, $validMedidas)) {
+            $registerMessage = 'Unidade de medida inválida.';
         } else {
-            // Falha! Exibe uma mensagem de erro.
-            $registerMessage = 'Ocorreu um erro ao cadastrar o produto. Por favor, tente novamente.';
+            if($produtoController->cadastroProduto($nome, $preco, $categoria, $medida, $fotoBin, $id_empreendimento)) {
+                header('Location: empresa_produto.php?status=success');
+                exit();
+            } else {
+                $registerMessage = 'Ocorreu um erro ao cadastrar o produto. Por favor, tente novamente.';
+            }
         }
-    } else {
-        $registerMessage = 'Por favor, preencha todos os campos e selecione uma foto.';
     }
 }
 ?>

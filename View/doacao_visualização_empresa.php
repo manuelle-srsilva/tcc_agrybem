@@ -1,3 +1,11 @@
+<?php
+session_start();
+require_once __DIR__ . '/../vendor/autoload.php';
+use Controller\InstituicaoController;
+
+$instController = new InstituicaoController();
+$instituicoes = $instController->getAllInstituicoes();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -18,7 +26,7 @@
                 <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
             </div>
              <nav class="nav">  
-                <a href="../View/cliente_pag_principal.php" class="nav-button">Voltar</a>
+                <a href="../View/painel_profissional_empresa.php" class="nav-button">Voltar</a>
             </nav>
           
         </div>
@@ -38,7 +46,7 @@
     <section class="featured-products">
         <div class="container">
             <h2 class="featured-title">Instituições que Transformam Vidas</h2>
-            <p class="featured-subtitle">Descubra projetos que fazem a diferença e espalham solidariedade pela sua região.</p>
+            <p class="featured-subtitle">Descubra projetos que fazem a diferença e espalham solidariedade pela sua região</p>
 
             <div class="product-cards-container">
                 <!-- Card de Produto 1 -->
@@ -64,7 +72,7 @@
                     <div class="product-info-overlay">
                         
                         <h3 class="product-name">Conecte-se ao Bem</h3>
-                        <p class="product-description">Encontre instituições próximas a você e fortaleça o impacto da solidariedade local.</p>
+                        <p class="product-description">Encontre instituições próximas a você e fortaleça o impacto da solidariedade local</p>
                     </div>
                     <button class="add-to-cart-btn">+</button>
                 </div>
@@ -76,7 +84,7 @@
                     </div>
                     <div class="product-info-overlay">
                         <h3 class="product-name">Catálogo Solidário</h3>
-                        <p class="product-description">Um espaço para descobrir, apoiar e divulgar o trabalho de quem faz o bem todos os dias.</p>
+                        <p class="product-description">Um espaço para descobrir, apoiar e divulgar o trabalho de quem faz o bem todos os dias</p>
                     </div>
                     <button class="add-to-cart-btn">+</button>
                 </div>
@@ -89,7 +97,7 @@
                     <div class="product-info-overlay">
                        
                         <h3 class="product-name">Estratégias de Destaque</h3>
-                        <p class="product-description">Aprimore sua vitrine digital com boas práticas de apresentação. Utilize descrições objetivas e imagens de qualidade para atrair mais clientes.</p>
+                        <p class="product-description">Aprimore sua vitrine digital com boas práticas de apresentação. Utilize descrições objetivas e imagens de qualidade para atrair mais clientes</p>
                     </div>
                     <button class="add-to-cart-btn">+</button>
                 </div>
@@ -103,7 +111,7 @@
    <!-- Seção de Pesquisa -->
         <section class="search-section">
             
-            <h2 class="search-title">Descubra instituições perto de você.</h2>
+            <h2 class="search-title">Descubra instituições perto de você</h2>
             <div class="search-container">
                 <div class="search-input-wrapper">
                     <input type="text" class="search-input" placeholder="Pesquisar...">
@@ -117,142 +125,36 @@
     <!-- Grade de Cartões -->
     <section class="cards-section">
        <div class="cards-grid">
-           <a href="../View/instituicao_vitrine_empresa.php" class="card-link">
-    <!-- Cartão 1 -->
-    <div class="card">
-        <div class="card-image">
-            <img src="../templates/assets/img/instituição 1.png" alt="Crédito Rural">
-        </div>
-        <div class="card-content">
-            <h3 class="card-title">Ação Cidadã Brasil</h3>
-            <p class="card-category">Camaçari (Centro)</p>
-        </div>
-    </div>
-</a>
-
-
-            
-
-            <!-- Cartão 2 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="../templates/assets/img/instituição 2.png" alt="Sementes">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Comunidade fé e verdade</h3>
-                    <p class="card-category">Camaçari (Centro)</p>
-                </div>
-            </div>
-
-            <!-- Cartão 3 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="../templates/assets/img/instituição 3.png" alt="Maquinário">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Maquinário Agrícola</h3>
-                    <p class="card-category">Categoria: Equipamentos</p>
-                </div>
-            </div>
-
-            <!-- Cartão 4 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="../templates/assets/img/instituição 4.png" alt="Fertilizantes">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Fertilizantes Orgânicos</h3>
-                    <p class="card-category">Categoria: Insumos</p>
-                </div>
-            </div>
-
-            <!-- Cartão 5 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x150?text=Consultoria" alt="Consultoria">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Consultoria Agrícola</h3>
-                    <p class="card-category">Categoria: Serviços</p>
-                </div>
-            </div>
-
-            <!-- Cartão 6 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x150?text=Pesticidas" alt="Pesticidas">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Pesticidas Naturais</h3>
-                    <p class="card-category">Categoria: Insumos</p>
-                </div>
-            </div>
-
-            <!-- Cartão 7 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x150?text=Irrigação" alt="Irrigação">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Sistemas de Irrigação</h3>
-                    <p class="card-category">Categoria: Equipamentos</p>
-                </div>
-            </div>
-
-            <!-- Cartão 8 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x150?text=Armazenamento" alt="Armazenamento">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Armazenamento de Grãos</h3>
-                    <p class="card-category">Categoria: Infraestrutura</p>
-                </div>
-            </div>
-
-            <!-- Cartão 9 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x150?text=Transporte" alt="Transporte">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Transporte Agrícola</h3>
-                    <p class="card-category">Categoria: Logística</p>
-                </div>
-            </div>
-
-            <!-- Cartão 10 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x150?text=Seguros" alt="Seguros">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Seguros Agrícolas</h3>
-                    <p class="card-category">Categoria: Seguros</p>
-                </div>
-            </div>
-
-            <!-- Cartão 11 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x150?text=Tecnologia" alt="Tecnologia">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Tecnologia Agrícola</h3>
-                    <p class="card-category">Categoria: Tecnologia</p>
-                </div>
-            </div>
-
-            <!-- Cartão 12 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/200x150?text=Mercado" alt="Mercado">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Mercado de Produtos</h3>
-                    <p class="card-category">Categoria: Comercialização</p>
-                </div>
-            </div>
+            <?php if(!empty($instituicoes)): ?>
+                <?php foreach($instituicoes as $inst): ?>
+                    <?php
+                        $foto_src = '';
+                        if(!empty($inst['foto'])){
+                            $foto_base64 = base64_encode($inst['foto']);
+                            $foto_src = 'data:image/jpeg;base64,' . $foto_base64;
+                        } else {
+                            $foto_src = '../templates/assets/img/dd.png';
+                        }
+                        $link = "../View/instituicao_vitrine_empresa.php?id=" . urlencode($inst['id']);
+                        $cidade = htmlspecialchars($inst['cidade'] ?? '');
+                        $bairro = htmlspecialchars($inst['bairro'] ?? '');
+                        $cidade_bairro = trim($cidade . ($cidade && $bairro ? ' (' . $bairro . ')' : '')) ?: 'Cidade (Bairro)';
+                    ?>
+                    <a href="<?php echo $link; ?>" class="card-link" data-city="<?php echo $cidade; ?>">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="<?php echo $foto_src; ?>" alt="<?php echo htmlspecialchars($inst['nome']); ?>">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title"><?php echo htmlspecialchars($inst['nome']); ?></h3>
+                                <p class="card-category"><?php echo $cidade_bairro; ?></p>
+                            </div>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Nenhuma instituição cadastrada no momento</p>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -270,6 +172,51 @@
     new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
     
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const input = document.querySelector('.search-input');
+        const btn = document.getElementById('searchIcon');
+
+        function filter(){
+            const q = (input && input.value || '').trim().toLowerCase();
+            const cards = document.querySelectorAll('.card-link');
+            let anyShown = false;
+            cards.forEach(a => {
+                const city = (a.dataset.city || '').toLowerCase();
+                const titleEl = a.querySelector('.card-title');
+                const title = (titleEl && titleEl.textContent || '').toLowerCase();
+                const show = !q || city.includes(q) || title.includes(q);
+                a.style.display = show ? '' : 'none';
+                if(show) anyShown = true;
+            });
+            // optional: show message when no results
+            let noMsg = document.getElementById('noResultsMsg');
+            if(!noMsg){
+                noMsg = document.createElement('p');
+                noMsg.id = 'noResultsMsg';
+                noMsg.style.display = 'none';
+                const grid = document.querySelector('.cards-grid');
+            }
+            noMsg.style.display = anyShown ? 'none' : '';
+        }
+
+        if(input){
+            input.addEventListener('input', filter);
+            input.addEventListener('keyup', filter);
+        }
+
+        if(btn){
+            btn.addEventListener('click', function(e){
+                e.preventDefault();
+                filter();
+            });
+        }
+
+        // initial filter (in case page preserves state)
+        filter();
+    });
+    </script>
+
    <script src="../templates/assets/js/menu_profissional.js"></script>
 </body>
 </html> 

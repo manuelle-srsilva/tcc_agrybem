@@ -193,7 +193,7 @@ $empreendimentos = $empreendimentoController->getAllEmpreendimentos();
     <script>
     // Filtro por cidade (cliente_pag_principal.php) — toggle class on .card-link to avoid touching inner card styles
     (function(){
-        const searchInput = document.querySelector('.search-section .search-input');
+        const searchInput = document.querySelector('.search-input');
         const cardsGrid = document.querySelector('.cards-grid');
         if(!searchInput || !cardsGrid) return;
         searchInput.addEventListener('input', function(){

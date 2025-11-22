@@ -104,6 +104,10 @@ class InstituicaoController{
         return $this->instituicaoModel->getInstituicaoInfo($id);
     }
 
+    public function getAllInstituicoes(){
+        return $this->instituicaoModel->getAllInstituicoes();
+    }
+
     //Atualizar informações de cadastro da instituição
     public function updateInstituicao($id, $nome, $email, $cnpj, $link_whatsapp){
         if(empty($id) || empty($nome) || empty($email) || empty($cnpj) || empty($link_whatsapp)){

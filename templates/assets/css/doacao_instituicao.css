@@ -31,7 +31,7 @@ html, body {
 
 .header .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -125,7 +125,7 @@ html, body {
 .header-top {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Adicionado para alinhar o ícone à direita */
+    justify-content: flex-start; /* Adicionado para alinhar o ícone à direita */
     gap: 20px;
     margin-bottom: 20px;
     width: 100%; /* Garante que o header-top ocupe toda a largura */
