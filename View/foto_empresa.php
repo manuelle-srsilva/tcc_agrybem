@@ -84,8 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 
         <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
-            
-
             <!-- Formulário -->
             <div class="form-container">
                 <h1 class="form-title">Foto de perfil!</h1>
@@ -94,89 +92,92 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
                     <div class="upload-box">
                         <input type="file" id="foto" name="foto" accept="image/*" class="upload-input">
                         <label for="foto" class="upload-label">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="17 8 12 3 7 8"/>
-                                <line x1="12" y1="3" x2="12" y2="15"/>
-                            </svg>
-                            <p>Envie sua foto</p>
+                            <!-- Conteúdo original para o estado vazio -->
+                            <div id="upload-content">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                <p>Envie sua foto</p>
+                            </div>
+                            <!-- A imagem de preview agora está dentro do label -->
+                            <img id="foto-preview" alt="Pré-visualização da foto" />
                         </label>
                     </div>
                     
-                    <div class="preview-container">
-                        <img id="foto-preview" alt="Pré-visualização da foto" style="max-width:240px;max-height:240px;display:none;border-radius:8px;margin-top:12px;" />
-                        <p id="foto-error" style="color:#c00;display:none;margin-top:8px;font-size:0.9rem"></p>
-                    </div>
+                    <!-- Mensagem de erro para validação do arquivo -->
+                    <p id="foto-error" style="color:#c00;display:none;margin-top:8px;font-size:0.9rem;text-align:center;"></p>
 
                     <input type="hidden" name="action" value="finalize">
                     
-                    <?php if ($registerMessage): ?>
-                        <p class="error"><?php echo htmlspecialchars($registerMessage); ?></p>
+                    <?php if ($registerMessage ): ?>
+                        <p class="error" style="text-align:center; color: #c00;"><?php echo htmlspecialchars($registerMessage); ?></p>
                     <?php endif; ?>
+
                     <!-- BOTÃO OK -->
                     <div class="form-group form-button-ok">
                         <button type="submit" class="ok-button">OK</button>
                     </div>
-        
-
                 </form>
             </div>
         </main>
-
-        
     </div>
-        <script>
-        // Preview selected image before upload (minimal, client-side)
-        ;(function(){
-            const input = document.getElementById('foto');
-            const preview = document.getElementById('foto-preview');
-            const err = document.getElementById('foto-error');
-            const MAX_BYTES = 5 * 1024 * 1024; // 5MB
 
-            if (!input) return;
+    <script>
+    // Preview da imagem selecionada dentro da caixa de upload
+    ;(function(){
+        const input = document.getElementById('foto');
+        const label = document.querySelector('.upload-label'); // Seleciona o label
+        const preview = document.getElementById('foto-preview');
+        const err = document.getElementById('foto-error');
+        const MAX_BYTES = 5 * 1024 * 1024; // 5MB
 
-            input.addEventListener('change', function(e){
-                err.style.display = 'none';
-                preview.style.display = 'none';
-                preview.src = '';
+        if (!input) return;
 
-                const file = this.files && this.files[0];
-                if (!file) return;
+        input.addEventListener('change', function(e){
+            err.style.display = 'none';
+            label.classList.remove('has-image'); // Remove a classe ao trocar de imagem
+            preview.src = '';
 
-                // basic validations
-                if (!file.type || !file.type.startsWith('image/')) {
-                    err.textContent = 'Por favor selecione um arquivo de imagem (jpg, png, etc).';
-                    err.style.display = 'block';
-                    this.value = '';
-                    return;
-                }
+            const file = this.files && this.files[0];
+            if (!file) return;
 
-                if (file.size > MAX_BYTES) {
-                    err.textContent = 'Arquivo muito grande. Tamanho máximo: 5MB.';
-                    err.style.display = 'block';
-                    this.value = '';
-                    return;
-                }
+            // Validações
+            if (!file.type || !file.type.startsWith('image/')) {
+                err.textContent = 'Por favor selecione um arquivo de imagem (jpg, png, etc).';
+                err.style.display = 'block';
+                this.value = '';
+                return;
+            }
 
-                const reader = new FileReader();
-                reader.onload = function(ev){
-                    preview.src = ev.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            });
-        })();
-        </script>
-         <!-- Api Vlibras -->
+            if (file.size > MAX_BYTES) {
+                err.textContent = 'Arquivo muito grande. Tamanho máximo: 5MB.';
+                err.style.display = 'block';
+                this.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(ev){
+                preview.src = ev.target.result;
+                label.classList.add('has-image'); // Adiciona classe para mostrar a imagem
+            };
+            reader.readAsDataURL(file);
+        });
+    })();
+    </script>
+
+    <!-- Api Vlibras -->
     <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
-    </div>
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
     </div>
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
+        new window.VLibras.Widget('https://vlibras.gov.br/app' );
     </script>
 </body>
 </html>

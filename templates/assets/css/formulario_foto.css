@@ -124,10 +124,8 @@ body {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 80px;
+    align-items: flex-start; /* Alinhado ao topo para melhor visualização */
     padding: 40px 20px;
-    position: relative;
 }
 
 /* ===== FORMULÁRIO ===== */
@@ -152,7 +150,7 @@ body {
 .form {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 15px; /* Reduzido o gap para acomodar a mensagem de erro */
 }
 
 .form-group {
@@ -178,12 +176,14 @@ body {
     border-radius: 25px;
     width: 300px;
     height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: flex; /* Mantém o flex */
+    flex-direction: column; /* Mantém a direção */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
     cursor: pointer;
     transition: border-color 0.3s ease, transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .upload-label:hover {
@@ -191,14 +191,69 @@ body {
     transform: scale(1.02);
 }
 
-.upload-label p {
+#upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#upload-content p {
     margin-top: 10px;
     font-weight: 500;
     color: #1a1a1a;
 }
 
-/* Os botões de navegação lateral foram removidos do HTML, 
-   portanto, seus estilos não são mais necessários. */
+/* Estilo para a imagem de pré-visualização */
+#foto-preview {
+    display: none; /* Começa escondida */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobre o container sem distorcer a imagem */
+    border-radius: 25px; /* Mantém o arredondamento do label */
+}
+
+/* Esconde o ícone e o texto quando a imagem é carregada */
+.upload-label.has-image #upload-content {
+    display: none;
+}
+
+/* Mostra a imagem quando a classe .has-image é adicionada ao label */
+.upload-label.has-image #foto-preview {
+    display: block;
+}
+
+
+/* ===== BOTÃO OK ===== */
+.form-button-ok {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.ok-button {
+  display: inline-block;
+  width: 100px;              
+  background-color: #003b16; 
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;     
+  border-radius: 6px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center;
+  border: none; /* Garante que não haja borda padrão */
+}
+
+.ok-button:hover {
+  background-color: #04681a;
+}
 
 /* ===== FOOTER ===== */
 .footer {
@@ -213,12 +268,6 @@ body {
     align-items: center;
 }
 
-.footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
 .footer-logo-text {
     font-size: 24px;
     font-weight: 700;
@@ -229,79 +278,16 @@ body {
     color: #9bff5d;
 }
 
-/* Estilos para o Botão OK */
-.form-button-ok {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.ok-button {
-   display: inline-block;
-  width: 100px;              
-  background-color: #003b16; 
-  color: white;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;     
-  border-radius: 6px;
-  padding: 10px 0;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  align-self: center;
-}
-
-.ok-button:hover {
-  background-color: #04681a;
-}
-
 .footer-tagline {
     color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
     font-weight: 600;
     font-size: 16px;
     text-align: center;
 }
-@media screen and (max-width: 768px) {
-  body { transform: scale(0.85); zoom: 0.85; }
-  .foto-container img { max-width: 100%; height: auto; object-fit: cover; }
-}
-@media screen and (max-width: 480px) { body { transform: scale(1); zoom: 0.75; } }
 
-/* Estilos para o Botão OK (copiados de empresa_descricao.css) */
-.form-button-ok {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.ok-button {
-   display: inline-block;
-  width: 100px;              /* tamanho pequeno */
-  background-color: #003b16; /* verde escuro */
-  color: white;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;     /* remove o sublinhado */
-  border-radius: 6px;
-  padding: 10px 0;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  align-self: center;
-  
- 
-  transition: background-color 0.3s ease;
-}
-
-.ok-button:hover {
-  background-color: #04681a;
-}
-
-/* ===== RESPONSIVIDADE (Ajustar se necessário) ===== */
+/* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
     .main-content {
-        gap: 40px;
         padding: 30px 20px;
     }
 
@@ -309,38 +295,20 @@ body {
         padding: 30px 20px;
         max-width: 100%;
     }
-
-    .nav-button-side {
-        /* Esconder os botões laterais na versão final */
-        display: none; 
-    }
 }
 
 @media (max-width: 480px) {
     .main-content {
-        gap: 20px;
         padding: 20px 10px;
-        flex-direction: column;
     }
 
     .form-container {
         padding: 20px 15px;
     }
-}
-.footer {
-    background-color: #002c0b;
-    padding: 20px 0;
-    
-    /* Configuração para fixar na parte inferior da tela */
-    position: fixed; 
-    bottom: 0;      
-    left: 0;        
-    width: 100%;    
-    z-index: 1000;  
-}
 
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    .upload-label {
+        width: 100%;
+        max-width: 280px;
+        height: 140px;
+    }
 }
