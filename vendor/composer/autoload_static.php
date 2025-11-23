@@ -11,27 +11,27 @@ class ComposerStaticInit01c9d420fb7af98cbfc1d0cbef1952d4
     );
 
     public static $prefixLengthsPsr4 = array (
-        'M' => 
+        'M' =>
         array (
             'Model\\' => 6,
             'Manu\\PreSite\\' => 13,
         ),
-        'C' => 
+        'C' =>
         array (
             'Controller\\' => 11,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Model\\' => 
+        'Model\\' =>
         array (
             0 => __DIR__ . '/../..' . '/Model',
         ),
-        'Manu\\PreSite\\' => 
+        'Manu\\PreSite\\' =>
         array (
             0 => __DIR__ . '/../..' . '/pre_site',
         ),
-        'Controller\\' => 
+        'Controller\\' =>
         array (
             0 => __DIR__ . '/../..' . '/Controller',
         ),

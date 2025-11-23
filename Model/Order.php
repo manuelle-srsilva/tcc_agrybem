@@ -87,7 +87,7 @@ class Order {
 
     public function getOrdersByEmpresa($empresa_id){
         try{
-            $sql = "SELECT o.*, (SELECT nome FROM empreendimento e WHERE e.id = o.empresa_id LIMIT 1) AS empresa_nome FROM orders o WHERE o.empresa_id = :empresa_id ORDER BY o.pickup_date DESC, o.created_at DESC";
+            $sql = "SELECT o.*, (SELECT nome FROM cliente c WHERE c.id = o.cliente_id LIMIT 1) AS cliente_nome FROM orders o WHERE o.empresa_id = :empresa_id ORDER BY o.pickup_date DESC, o.created_at DESC";
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue(':empresa_id', $empresa_id, PDO::PARAM_INT);
             $stmt->execute();
