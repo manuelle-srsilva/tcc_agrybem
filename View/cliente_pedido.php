@@ -58,6 +58,7 @@
             }
 
             $orderModel = new Order();
+	            $total_pedido = 0; // Inicializa a variável para o total do pedido
             $produtoModel = new Produto();
             $orders = [];
             if($cliente_id){
@@ -115,17 +116,43 @@
                             echo '<div class="card-meta compact-meta">';
                             echo '<span class="meta-item"><strong>Loja:</strong> ' . htmlspecialchars($o['empresa_nome'] ?? 'Loja') . '</span>';
                             echo '<span class="meta-item"><strong>Data:</strong> ' . date('d/m/Y', strtotime($o['pickup_date'] ?? $o['created_at'])) . '</span>';
-                            echo '<span class="meta-item"><strong>Hora:</strong> ' . htmlspecialchars($o['pickup_time'] ?? '') . '</span>';
-                            echo '</div>';
-                            echo '<ul class="card-items-list compact-list">';
-                            echo '<li class="item-list-title">Itens Solicitados:</li>';
-                            foreach($o['items'] as $it){
+echo '<span class="meta-item"><strong>Hora:</strong> ' . htmlspecialchars($o['pickup_time'] ?? '') . '</span>';
+	                            
+	                            // Calcula o total do pedido
+	                            $total_pedido = 0;
+	                            foreach($o['items'] as $item){
+	                                $preco = 0;
+	                                try{
+	                                    $p = $produtoModel->getProdutoInfo($item['produto_id']);
+	                                    if(!empty($p) && isset($p['preco'])) $preco = (float)$p['preco'];
+	                                } catch(Exception $e){ }
+	                                
+	                                $quantidade = (float)($item['quantidade'] ?? 0);
+	                                $total_pedido += $preco * $quantidade;
+	                            }
+	                            
+	                            // Formata o total para exibição
+	                            $total_formatado = 'R$ ' . number_format($total_pedido, 2, ',', '.');
+	                            
+	                            // Exibe o campo Total
+	                            echo '<span class="meta-item"><strong>Total:</strong> ' . $total_formatado . '</span>';
+	                            
+	                            echo '</div>'; // card-meta
+	                            echo '<ul class="card-items-list compact-list">';
+	                            echo '<li class="item-list-title">Itens Solicitados:</li>';
+	                            
+	                            foreach($o['items'] as $it){
                                 // get product name from Produto model
-                                $prodName = 'Produto #' . $it['produto_id'];
-                                try{
-                                    $p = $produtoModel->getProdutoInfo($it['produto_id']);
-                                    if(!empty($p) && !empty($p['nome'])) $prodName = $p['nome'];
-                                } catch(Exception $e){ }
+$prodName = 'Produto #' . $it['produto_id'];
+	                                $precoUnitario = 0;
+	                                try{
+	                                    $p = $produtoModel->getProdutoInfo($it['produto_id']);
+	                                    if(!empty($p) && !empty($p['nome'])) $prodName = $p['nome'];
+	                                    if(!empty($p) && isset($p['preco'])) $precoUnitario = (float)$p['preco'];
+	                                } catch(Exception $e){ }
+	                                
+	                                $precoFormatado = 'R$ ' . number_format($precoUnitario, 2, ',', '.');
+	                                $prodName .= ' (' . $precoFormatado . ')'; // Adiciona o preço ao nome do produto
 
                                 // format quantity: kg/g -> 2 decimals max, un -> 0 decimals
                                 $unit = $it['unidade'] ?? '';
@@ -133,10 +160,10 @@
                                 $dec = ($unit === 'un') ? 0 : 2;
                                 $qtyFormatted = number_format((float)$qty, $dec, ',', '');
 
-                                echo '<li class="card-item">';
-                                echo '<span class="item-name">' . htmlspecialchars($prodName) . '</span>';
-                                echo '<span class="item-quantity">' . htmlspecialchars($qtyFormatted) . ' ' . htmlspecialchars($unit) . '</span>';
-                                echo '</li>';
+echo '<li class="card-item">';
+	                                echo '<span class="item-name">' . htmlspecialchars($prodName) . '</span>';
+	                                echo '<span class="item-quantity">' . htmlspecialchars($qtyFormatted) . ' ' . htmlspecialchars($unit) . '</span>';
+	                                echo '</li>';
                             }
                             echo '</ul>';
                             echo '</div>'; // order-card
