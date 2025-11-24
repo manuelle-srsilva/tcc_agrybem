@@ -1,0 +1,29 @@
+{
+    "name": "manu/pre_site",
+    "description": "composer",
+    "type": "project",
+    "autoload": {
+        "classmap": [
+            "Controller/"
+        ],
+        "psr-4": {
+            "Manu\\PreSite\\": "pre_site/",
+            "Controller\\": "Controller/",
+            "Model\\": "Model/"
+        },
+        "files": [
+            "Config/configuration.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "manuelle-srsilva",
+            "email": "maanuxz14@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">= 8.0",
+        "ext-mbstring": "*"
+    }
+}
