@@ -1,11 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Agrybem - Agricultura e comércio unidos</title>
+    <link rel="stylesheet" href="templates/assets/css/paginicial.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 </head>
+
+
 <body>
+    <!-- Header fixo para todas as páginas-->
+     
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+               
+                <span class="logo-text">Agry<span class="logo-highlight">bem</span></span>
+            </div>
+            <nav class="nav">
+                    <a href="#doacao" class="nav-link">Instituição</a>
+                <a href="View/login_empresa.php" class="nav-link">Empreendimento</a>
+              
+                <a href="View/cliente_login.php" class="nav-button">Entrar</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section (conteudo inical da pag inicial)-->
+<section class="hero">
+	  <img src="templates/assets/img/Agrigem (3).png" alt="Imagem de fundo da página inicial" class="hero-img">
+	  <div class="container hero-container">
+	    <div class="hero-content">
+	      <h1 class="hero-title">Agricultura e comércio unidos para facilitar sua vida.</h1>
+	   
+	</section>
+
+
+    <!-- sessão dos cards da pag principal-->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">O melhor da agricultura <span class="highlight">para você<span class="exclamation">!</span></span></h2>
+            <div class="carousel-wrapper">
+                <div class="products-carousel">
+                <div class="product-card">
+                    <img src="templates/assets/img/grid principal 1.png" alt="Sementes" class="product-img">
+                </div>
+                <div class="product-card">
+                    <img src="templates/assets/img/grid principal 2.png" alt="Tomates" class="product-img">
+                </div>
+                <div class="product-card">
+                    <img src="templates/assets/img/grid principal 3.png" alt="Café" class="product-img">
+                </div>
+                <div class="product-card">
+                    <img src="templates/assets/img/grid principal 4.png" alt="Castanhas" class="product-img">
+                </div>
+                <div class="product-card">
+                    <img src="templates/assets/img/castanha pag inicia.png" alt="Novo Produto" class="product-img">
+                </div>
+
+                <!-- Duplicando os cards para o efeito de carrossel infinito -->
+
+                <div class="product-card">
+                    <img src="templates/assets/img/grid principal 1.png" alt="Sementes" class="product-img">
+                </div>
+                <div class="product-card">
+                    <img src="templates/assets/img/grid principal 2.png" alt="Tomates" class="product-img">
+                </div>
+                <div class="product-card">
+                    <img src="templates/assets/img/grid principal 3.png" alt="Café" class="product-img">
+                </div>
+                <div class="product-card">
+                    <img src="templates/assets/img/grid principal 4.png" alt="Castanhas" class="product-img">
+                </div>
+                <div class="product-card">
+                    <img src="templates/assets/img/castanha pag inicia.png" alt="Novo Produto" class="product-img">
+                </div>
+               
+            </div>
+        </div>
+    </section>
     
+
+    <!--sessão do sobre nós -->
+    <section class="about">
+        <div class="container about-container">
+            <div class="about-content">
+                <h2 class="about-title">Sobre o <span class="about-highlight">Agry<span class="about-highlight-dark">bem</span></span></h2>
+                <p class="about-text">O AgryBem é uma plataforma voltada para impulsionar os negócios agrícolas, conectando produtores, comerciantes e consumidores. Nosso objetivo é fortalecer a agricultura familiar, valorizar o comércio local e incentivar ações solidárias.</p>
+            </div>
+            <div class="about-image">
+                <div class="about-image-wrapper">
+                    <img src="templates/assets/img/img do sobre nos.png" alt="Agricultor trabalhando" class="about-img">
+                    <div class="about-image-accent"></div>
+                </div>  
+            </div>
+        </div>
+    </section>
+
+ <!-- sessão da doação -->
+<section id="doacao" class="donation">
+    <div class="container donation-container">
+        <div class="donation-content">
+            <h2 class="donation-title">Receba com o Agry<span class="donation-highlight">bem</span>!</h2>
+            <p class="donation-text">
+                No Agrybem, instituições como ONGs e igrejas podem se cadastrar para receber doações de alimentos vindas de produtores, comerciantes e consumidores solidários.
+            </p>
+            <a href="View/instituicao_login.php" class="donation-button">Entre como instituição</a>
+        </div>
+        <div class="donation-image">
+            <img src="templates/assets/img/agricultordoação" alt="Agricultor com vegetais" class="donation-img">
+        </div>
+    </div>
+</section>
+
+
+    <!-- sessão propaganda -->
+    <section class="cta">
+        <div class="container cta-container">
+            <div class="cta-image">
+                <img src="templates/assets/img/menina do cell pag inicial.png" alt="Mulher com smartphone" class="cta-img">
+            </div>
+            <div class="cta-content">
+                <h2 class="cta-title">Cadastre-se para uma melhor experiência!</h2>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer fixo para todas as pag -->
+    <footer class="footer-mobile footer-desktop">
+        <div class="container footer-container">
+            <div class="footer-logo">
+                
+                <span class="footer-logo-text">Agry<span class="footer-logo-highlight">bem</span></span>
+            </div>
+            <div class="footer-tagline">
+                Mais que produção, uma relação com você!
+            </div>
+        </div>
+    </footer>
+  
+
+     <!-- Seção de Copyright (Nova) -->
+    <section class="copyright-mobile copyright-desktop">
+        <div class="container copyright-container">
+            <!-- Coluna 1: Copyright e Direitos -->
+            <div class="copyright-info">
+                <p class="copyright-text">
+                    &copy;  2025 - Agrybem 
+                </p>
+                <p class="copyright-text-small">
+                    Agrybem Agência de Negócios Agrícolas e Bem-Estar 
+                </p>
+            </div>
+
+            <!-- Coluna 2: CNPJ e Endereço (Adaptado para o contexto Agrybem) -->
+            <div class="copyright-address">
+                <p class="copyright-text-small">
+                    Camaçari/BA  | agrybem@gmail.com
+                </p>
+            </div>
+
+            <!-- Coluna 3: Ícones Sociais -->
+            <div class="copyright-social">
+                
+                <a href="https://www.instagram.com/agrybem?igsh=MW55dW04M3B2bXJvMA%3D%3D&utm_source=qr" target="_blank">
+                    <img src="templates/assets/img/instagram (1).png" alt="Instagram Agrybem" class="icon social-icon">
+                </a>
+            </div>
+        </div>
+    </section>
+
+ <!-- Api Vlibras -->
+    <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
 </html>
