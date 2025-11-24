@@ -1,0 +1,1255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+/* ===== HEADER ===== */
+.header {
+    background-color: #D9D9D9;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.logo-highlight {
+    color: #5A8F3A;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color:#007411;
+    font-weight: 500;
+    font-size: 16px;
+    transition: color 0.3s ease;
+     /* transform: translateX(50px);  */
+}
+
+.nav-link:hover {
+    color: #5A8F3A;
+}
+
+.nav-button {
+    background-color: #315901;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: #4a7a2f;
+    transform: translateY(-2px);
+}
+
+/* Menu Container and Toggle */
+.menu-container {
+    position: relative;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #007411;
+    padding: 8px;
+    transition: color 0.3s ease;
+    /* transform: translateX(50px);  */
+
+}
+
+.menu-toggle:hover {
+    color: #5A8F3A;
+}
+
+.menu-icon-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: -1px; /* empurra 20px para a direita */
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    min-width: 180px;
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.473); /* Fundo branco transparente */
+  backdrop-filter: blur(10px); /* Aplica o efeito de desfoque */
+  -webkit-backdrop-filter: blur(10px); /* Suporte para Safari */
+
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-bottom: 1px solid #ffffff60;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item:hover {
+    background-color: #f5f5f5;
+    color: #5A8F3A;
+}
+
+.menu-item-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* até aqui*/
+/* ===== HERO SECTION ===== */
+
+
+
+/* Products Section */
+.products {
+    background-color: #D9D9D9;
+    padding: 160px 0;
+}
+
+.section-title {
+    font-size: 30px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.highlight {
+    color: #5A8F3A;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 11px 0px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+     box-shadow: 
+    0 0 10px #8d8d8d,
+    0 0 10px #8d8d8d,
+    0 0 10px #8d8d8d,
+    0 0 10px #8d8d8d;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+/* ===== PROFESSIONAL PANEL ===== */
+
+.minha-loja {
+  
+     
+      transform: translateX(550px);
+    
+}
+
+.professional-panel {
+    background-color: #ffffff;
+    padding: 150px 80px;
+    text-align: center;
+}
+
+.panel-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 40px;
+}
+
+.button-group {
+    display: flex;
+    gap: 90px;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+     
+}
+
+.btn {
+    padding: 30px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    flex: 1;
+    min-width: 150px;
+     text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+    background-color: #5A8F3A;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #4a7a2f;
+    
+    
+}
+
+.btn-secondary {
+    background-color: #315901;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #1f3700;
+    transform: translateY(-2px);
+}
+
+.btn-donate {
+    background-color: #ffffff;
+    color: #315901;
+    border: 2px solid #315901;
+    padding: 12px 30px;
+    min-width: auto;
+    flex: none;
+}
+
+.btn-donate:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+
+/* Donation Section */
+.donation {
+    background-color: #133C1F;
+    padding: 40px 0;
+}
+
+.donation-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.donation-title {
+    font-size: 42px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.donation-highlight {
+    color: #5A8F3A;
+}
+
+.donation-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: white;
+    margin-bottom: 40px;
+       text-decoration: none; /* tira o sublinhado */
+    
+}
+
+.donation-button {
+    background-color: #CCCCCC;
+    color: #007411;
+    padding: 16px 40px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; /* tira o sublinhado */
+      box-shadow: 0 2px 10px rgba(129, 28, 28, 0.295);
+  
+
+}
+
+.donation-button:hover {
+    background-color: #ffffff;
+    transform: translateY(-2px);
+       text-decoration: none; /* tira o sublinhado */
+}
+
+.donation-image {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.donation-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* ===== SEARCH SECTION ===== */
+.search-section {
+    background-color: #f5f5f5;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.search-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 40px;
+    margin-top: 90px;
+    
+}
+
+.search-container {
+		    max-width: 500px;
+		    margin: 0 auto;
+		}
+
+.search-input-wrapper {
+		    position: relative;
+		    width: 100%;
+		}
+
+		.search-input {
+		    width: 100%;
+		    padding: 15px 50px 15px 20px; /* Aumenta o padding à direita para o ícone */
+		    border: 2px solid #d0d0d0;
+		    border-radius: 25px;
+		    font-size: 16px;
+		    font-family: 'Poppins', sans-serif;
+		    transition: border-color 0.3s ease;
+		}
+
+.search-input:focus {
+    outline: none;
+    border-color: #5A8F3A;
+}
+
+.search-btn-icon {
+		    position: absolute;
+		    right: 15px;
+		    top: 50%;
+		    transform: translateY(-50%);
+		    background: none;
+		    border: none;
+		    cursor: pointer;
+		}
+
+.search-icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* ===== CARDS SECTION ===== */
+.cards-section {
+    padding: 50px 20px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card-link {
+    text-decoration: none;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative; /* Adicionado para posicionamento do ícone */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-image img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.card-category {
+    font-size: 14px;
+    color: #5A8F3A;
+    font-weight: 500;
+}
+
+/* ======
+   FOOTER
+====== */
+.footer {
+    background-color: #002c0b;
+    padding: 3px 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.footer-logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+
+.footer-logo-highlight {
+    color: #9bff5d;
+}
+
+
+.footer-tagline {
+    color: rgb(255, 255, 255);
+    padding: 20px 200px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 20px;
+    transform: translateX(160px);
+}
+
+
+/* ======
+   COPYRIGHT SECTION
+====== */
+.copyright-section {
+    background-color: #e6e6e6; /* Fundo cinza claro */
+    padding: 20px 0;
+    border-top: 1px solid #d9d9d9;
+    font-size: 14px;
+    color: #666; /* Texto cinza escuro */
+}
+
+
+.copyright-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.copyright-info,
+.copyright-address {
+    flex-basis: 33.33%; 
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.copyright-info {
+    text-align: left;
+}
+
+
+.copyright-address {
+    text-align: center;
+}
+
+/* ======================================
+   CLIENTE PAG PRINCIPAL - RESPONSIVIDADE
+   ====================================== */
+
+
+
+/* --- Header: mantém elementos lado a lado em mobile --- */
+@media screen and (max-width: 480px) {
+  .header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+}
+
+  .logo .logo-text { font-size: 1.15rem; }
+  .nav { display: flex; align-items: center; gap: 8px; }
+  .nav .nav-link { font-size: 0.9rem; white-space: nowrap; }
+  .menu-container { display: inline-flex; align-items: center; }
+}
+
+/* --- 1) Remover a imagem lateral da seção de doação no mobile --- */
+@media screen and (max-width: 480px) {
+  /* esconde o frame/imagem lateral */
+  .donation-image-frame,
+  .donation-image-frame img,
+  .donation-img {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+
+.copyright-social {
+    flex-basis: 33.33%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.copyright-text {
+    margin: 0;
+    line-height: 1.4;
+}
+
+
+.copyright-text-small {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* Ícones sociais */
+.copyright-social .social-icon {
+    width: 24px;
+    height: 24px;
+    filter: grayscale(100%) opacity(70%);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+
+.copyright-social .social-icon:hover {
+    filter: grayscale(0%) opacity(100%);
+    transform: scale(1.1);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .donation-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .donation-image-frame {
+        height: 300px;
+    }
+
+     }
+    .img.menu-icon-img {
+        width: 24px;
+        height: 24px;
+        margin-right: 70px;
+    }
+
+    a.nav-link {
+        display: contents;
+        margin-right: 180px;
+        margin-left: 0px;
+    }
+
+     .section-title {
+        font-size: 13px;
+        margin-right: 300px;
+    }
+
+    .menu-toggle {
+        width: 24px;
+        height: 24px;
+        margin-right: 50px;
+    }
+}
+
+/* Responsividade dos cartões: em telas menores, permita que os cartões
+   ocupem 100% da largura disponível ao invés de manter 220px fixos. */
+@media (max-width: 900px) {
+    .cards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        justify-content: center;
+    }
+    .card-link {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 0 10px;
+    }
+    .card-link {
+        width: 100%;
+    }
+    .card-image { height: 140px; }
+}
+
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .nav {
+        gap: 15px;
+    }
+
+    .nav-link {
+        display: none; /* Esconde o link de nome em telas menores */
+    }
+
+  
+    .products {
+        padding: 80px 0;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .donation-blur-box {
+        padding: 40px 30px;
+    }
+
+    .donation-title {
+        font-size: 28px;
+    }
+
+    .donation-text {
+        font-size: 14px;
+    }
+
+    .menu-icon-img {
+        width: 24px;
+        height: 24px;
+    }
+
+    a.nav-link {
+        display: flex;
+        margin-right: 3px;
+        margin-left: 80px;
+    }
+
+    .donation-button {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+
+    .section-title {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    p.donation-text {
+        text-align: center;
+        margin-right: 200px;
+        width: 100%;
+    }
+
+    a.donation-button {
+       margin-left: 65px;
+    }
+
+    .footer-tagline {
+        text-align: center;
+        margin-right: 300px;
+        white-space: nowrap;
+        font-size: 14px;
+    }
+
+    img {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        height: 90px;
+    }
+    .img.menu-icon-img {
+        width: 24px;
+        height: 24px;
+        margin-left: 70px;
+    }
+
+    .menu-toggle {
+        width: 24px;
+        height: 24px;
+        margin-right: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+  
+    .hero {
+        height: 300px;
+    }
+
+
+  /* ajusta o conteúdo do card para ocupar o espaço */
+	  .donation-blur-box,
+	  .donation-content {
+	    max-width: 100% !important;
+	  }
+
+
+  /* garante que o background da seção continue atrás do card */
+	  .donation {
+	    display: block;
+	    padding: 18px 12px 36px;
+	  }
+}
+
+/* Se quiser manter a imagem em vez de remover, com proporção preservada,
+   comente o bloco acima e descomente o bloco abaixo e adapte aspect-ratio
+   (ex: 3/4 ou 16/9) para combinar com seu layout desktop. */
+/*
+@media screen and (max-width: 480px) {
+  .donation-container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  .donation-blur-box { flex: 1 1 56% !important; padding-right: 12px !important; }
+  .donation-image-frame { flex: 0 0 40% !important; max-width: 40% !important; }
+  .donation-image-frame { aspect-ratio: 3 / 4; overflow: hidden; border-radius: 12px; }
+  .donation-image-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+}
+*/
+
+/* --- 2) Corrigir barra de pesquisa (input + botão) --- */
+@media screen and (max-width: 480px) {
+  .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 10px auto 24px;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 12px 48px 12px 16px; /* espaço para o botão à direita */
+    border-radius: 28px;
+    border: 1px solid #e0e0e0;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  /* o botão do ícone tem a mesma classe .menu-toggle no seu HTML;
+     aqui tratamos especificamente quando ele estiver dentro de .search-container */
+  .search-container > button.menu-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 36px;
+    min-width: 36px;
+    padding: 6px;
+    border-radius: 18px;
+    border: none;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .search-container > button.menu-toggle img.menu-icon-img {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+}
+
+/* Se o botão da lupa for um input[type="submit"], use este seletor:
+.search-container input[type="submit"] { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); } */
+
+/* --- 3) Ajustes para a grade de produtos (manter proporção do desktop, permitir slide) --- */
+@media screen and (max-width: 480px) {
+  .products .container { padding: 0 8px 24px; box-sizing: border-box; }
+
+  /* transforma a grid em uma linha horizontal rolável com thumbs proporcionais */
+  .products-grid {
+    display: flex !important;
+    flex-direction: row;
+    gap: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .product-card {
+    flex: 0 0 auto;
+    width: 120px;              /* largura fixa por thumb para manter proporção */
+    border-radius: 12px;
+    background: transparent;
+    overflow: hidden;
+    box-shadow: none;
+  }
+
+  .product-img {
+    width: 100%;
+    height: 160px;            /* altura proporcional semelhante ao desktop */
+    object-fit: cover;        /* mantém recorte proporcional igual ao desktop */
+    border-radius: 12px;
+    display: block;
+  }
+
+  /* título da seção centralizado como no desktop mobile do protótipo */
+  .section-title {
+    text-align: center;
+    font-size: 1.05rem;
+    margin: 18px 0 12px;
+    padding: 0 12px;
+  }
+}
+
+/* Ajustes finos para telas extra pequenas (<=360px) */
+@media screen and (max-width: 360px) {
+  .product-card { width: 104px; }
+  .product-img  { height: 140px; }
+  .donation-blur-box { padding: 14px !important; }
+  .search-input { padding: 10px 44px 10px 12px; font-size: 0.92rem; }
+  .logo .logo-text { font-size: 1.05rem; }
+   }
+   
+
+
+    .search-title {
+        font-size: 22px;
+    }
+ .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+    /* Mobile: empilhar elementos do copyright */
+    .copyright-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .copyright-info,
+    .copyright-address,
+    .copyright-social {
+        flex-basis: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+    .copyright-social {
+        justify-content: center; /* centraliza os ícones no mobile */
+    }
+
+    /* Mobile: transformar a seção de cards em grid responsivo */
+    @media (max-width: 768px) {
+        .cards-section {
+            padding: 24px 12px 40px; /* reduzir padding no mobile */
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 colunas no mobile */
+            gap: 12px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+    }
+
+    /* Em telas muito pequenas, usar 1 coluna para melhor leitura */
+    @media (max-width: 380px) {
+        .cards-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+    }
+
+    
+/* até aqui*/
+/* ===== HERO SECTION ===== */
+.hero {
+    position: relative;
+    /* Altura ajustada para ocupar 90% da altura da tela (viewport height - vh) */
+    min-height: 100vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 50px 20px; /* Mantendo um padding para o conteúdo interno */
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    position: relative; 
+    z-index: 2; 
+    overflow: hidden; /* Garante que a imagem de fundo não vaze */
+
+}
+
+.hero-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)); /* Overlay de cor */
+    z-index: 1;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/* Ajuste para telas maiores (Desktop) */
+@media (min-width: 1025px) {
+    .hero {
+        /* Subtrai a altura aproximada do header para que o hero ocupe 90% do espaço restante */
+        min-height: calc(97vh - 80px); 
+    }
+}
+
+/* Ajuste para telas de tablet e notebooks (768px a 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .hero {
+        /* Mantém uma altura considerável, mas ajusta para o contexto de notebook/tablet */
+        min-height: 80vh; 
+    }
+}
+
+/* Ajuste para telas menores (celulares) */
+@media (max-width: 767px) {
+    .hero {
+        /* Altura menor para mobile */
+        min-height: 40vh; 
+    }
+    .hero-title {
+        font-size: 28px; /* Reduz o tamanho da fonte para telas menores */
+        bottom: 40px;
+        left: 20px;
+        color: white;
+    }
+}
+
+.hero-title {
+    color: white;
+    font-size: 40px;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    margin: 0; /* Removendo margem padrão */
+    padding: 0;
+     position: absolute;
+    bottom: 95px; /* distância do fundo */
+    left: 30px;   /* distância da esquerda */
+    color: white;
+}
+
+ 
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    @media (max-width: 768px) {
+    /* ... (outras regras de media query) ... */
+    
+    /* CORREÇÃO PRIORITÁRIA: product-cards-container para Rolagem Horizontal (Mobile) */
+  
+
+  
+    @media (max-width: 768px) {
+    /* ... (outras regras de media query para 768px) ... */
+
+
+    
+    /* ... (o restante das regras de 768px) ... */
+}
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .panel-title {
+        font-size: 24px;
+    }
+
+  
+
+}
+
+@media (max-width: 480px) {
+    .hero {
+        height: 250px;
+    }
+
+    .hero-blur-box {
+        width: 90%;
+        min-height: 150px;
+        padding: 20px;
+    }
+
+    .hero-title {
+        font-size: 24px;
+    }
+
+    .panel-title {
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+
+    .button-group {
+        gap: 10px;
+        flex-direction: column;
+    }
+
+ 
+}
+
+/* --- Seção de Copyright (Abaixo do Footer) --- */
+.copyright-section {
+    background-color: #ffffff; /* Cor de fundo cinza claro, similar à imagem */
+    padding: 20px 0;
+    border-top: 1px solid #d9d9d9;
+    font-size: 14px;
+    color: #666; /* Cor do texto cinza escuro */
+}
+
+.copyright-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    /* O container já está definido para 1200px e centralizado */
+}
+
+.copyright-info,
+.copyright-address {
+    /* Ajuste para que as colunas ocupem espaço de forma flexível, mas com alinhamento */
+    flex-basis: 33.33%; 
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.copyright-info {
+    text-align: left;
+}
+
+.copyright-address {
+    text-align: center;
+}
+
+.copyright-social {
+    flex-basis: 33.33%;
+    display: flex;
+    justify-content: flex-end; /* Alinha os ícones à direita */
+    align-items: center;
+    gap: 15px;
+}
+
+.copyright-text {
+    margin: 0;
+    line-height: 1.4;
+}
+
+.copyright-text-small {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Estilo para os ícones sociais dentro da seção de copyright */
+.copyright-social .social-icon {
+    width: 24px; /* Ícones menores para o rodapé */
+    height: 24px;
+    filter: grayscale(100%) opacity(70%); /* Deixa os ícones em tons de cinza */
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.copyright-social .social-icon:hover {
+    filter: grayscale(0%) opacity(100%); /* Colore ao passar o mouse */
+    transform: scale(1.1);
+}
+
+/* Regras de responsividade que estavam no final do arquivo */
+.product-cards-container{
+            display: flex !important;
+        flex-direction: row;
+        gap: 14px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+ .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+    /* Mobile: empilhar elementos do copyright */
+    .copyright-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .copyright-info,
+    .copyright-address,
+    .copyright-social {
+        flex-basis: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+    .copyright-social {
+        justify-content: center; /* centraliza os ícones no mobile */
+    }
+}
+
+
